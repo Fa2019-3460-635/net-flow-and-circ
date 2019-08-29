@@ -22,7 +22,7 @@ This project is to be done in a group of two/three students. The responsibilitie
 
  
 
-## Specific requirements:##
+## Specific requirements: ##
 
 1. The graph must be implemented using the Adjacency List Representation, read Chapter 22 of the textbook if you need.
 2. Design and implement the Breadth-First Search (BFS), read Chapter 22 of the textbook. This implementation must be a self-contained module to be applicable for any graph search problem where breadth-first search is needed.
