@@ -3,6 +3,9 @@
 #include <list>
 #include <map>
 
+#include "edge.hpp"
+#include "node.hpp"
+
 namespace graph
 {
 
