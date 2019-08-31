@@ -4,7 +4,6 @@
 #include <map>
 
 #include "edge.hpp"
-#include "node.hpp"
 
 namespace graph
 {
@@ -13,11 +12,10 @@ namespace graph
 	class Graph
 	{
 	public:
-    using node_type = Node<Key_t>;
     using edge_type = Edge<Key_t, Weight_t>;
 
   private:
-		std::map<node_type, std::list<edge_type>> adjacency_list;
+    std::map<Key_t, std::list<edge_type>> adjacency_list;
 
   public:
     void add_edge (Key_t n1, Key_t n2, Weight_t wt)
@@ -31,19 +29,19 @@ namespace graph
     {
       if (contains(key))
         return;
-      adjacency_list[node_type(key)];
+      adjacency_list[key];
     }
 
     bool contains (Key_t key) const
     {
-      return adjacency_list.find(node_type(key)) != adjacency_list.end();
+      return adjacency_list.find(key) != adjacency_list.end();
     }
 
     /// Undefined behavior results if the given node is not
     /// in the adjacency list.
-    std::list<edge_type> get_edges (node_type node) const
+    std::list<edge_type> get_edges (Key_t key) const
     {
-      return adjacency_list.at(node);
+      return adjacency_list.at(key);
     }
 
     int get_num_nodes () const

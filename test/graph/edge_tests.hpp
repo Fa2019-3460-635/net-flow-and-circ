@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 
 #include "edge.hpp"
-#include "node.hpp"
 
 TEST (EdgeTests, CanConstructAnEdge)
 {
