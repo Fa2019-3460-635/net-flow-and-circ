@@ -32,14 +32,16 @@ TEST (GraphTests, AddEdgeWorks)
 
 TEST (GraphTests, GetEdgesWorks)
 {
-  using Graph = graph::Graph<int, double>;
-  using Edge = Graph::edge_type;
-  Graph graph;
+  graph::Graph<int, double> graph;
+
   graph.add_edge(1, 2, 10);
   graph.add_edge(1, 3, 20);
   graph.add_edge(2, 3, 30);
+
   auto edges = graph.get_edges(1);
+
   EXPECT_EQ(2, edges.size());
+  
   for (auto const & edge : edges)
   {
     EXPECT_EQ(1, edge.get_node_one());
