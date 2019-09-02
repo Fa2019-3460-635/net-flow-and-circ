@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <stdexcept>
 
 class ProgramOptions
 {
@@ -18,13 +19,15 @@ public:
 
     static const std::string program_name();
 
-    static const AlgorithmSelection selected_algorithm();
+    static AlgorithmSelection selected_algorithm();
 
-    static const int source_node();
+    static int source_node();
 
-    static const int target_node();
+    static int target_node();
 
     static const std::string graph_filepath();
+
+    static void clear();
 
 private:
     ProgramOptions();
