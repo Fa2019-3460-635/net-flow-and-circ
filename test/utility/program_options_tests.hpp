@@ -5,7 +5,9 @@
 
 TEST (ProgramOptionsTests, CanParseValidBfsInput)
 {
+    // Clear the ProgramOptions singleton or else crazy things happen...
     ProgramOptions::clear();
+
     //set up the mock inputs
     char* moc_argv[] = {
         "program_name", // program name at index 0
@@ -24,7 +26,7 @@ TEST (ProgramOptionsTests, CanParseValidBfsInput)
     // check it
     EXPECT_EQ(ProgramOptions::program_name(), "program_name");
     EXPECT_EQ(ProgramOptions::selected_algorithm(),
-              ProgramOptions::AlgorithmSelection::BST);
+              ProgramOptions::AlgorithmSelection::BFS);
     EXPECT_EQ(ProgramOptions::graph_filepath(), "example.txt");
     EXPECT_EQ(ProgramOptions::source_node(), 0);
     EXPECT_EQ(ProgramOptions::target_node(), 13);
@@ -33,7 +35,9 @@ TEST (ProgramOptionsTests, CanParseValidBfsInput)
 
 TEST (ProgramOptionsTests, CanParseValidFordFulkersonInput)
 {
+    // Clear the ProgramOptions singleton or else crazy things happen...
     ProgramOptions::clear();
+
     //set up the mock inputs
     char* moc_argv[] = {
         "program_name", // program name at index 0
@@ -60,7 +64,9 @@ TEST (ProgramOptionsTests, CanParseValidFordFulkersonInput)
 
 TEST (ProgramOptionsTests, CanParseValidCirculationInput)
 {
+    // Clear the ProgramOptions singleton or else crazy things happen...
     ProgramOptions::clear();
+
     //set up the mock inputs
     char* moc_argv[] = {
         "program_name", // program name at index 0

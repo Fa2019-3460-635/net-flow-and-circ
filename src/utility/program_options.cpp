@@ -45,6 +45,10 @@ const std::string ProgramOptions::graph_filepath()
 
 void ProgramOptions::clear()
 {
+    if(s_instance)
+    {
+        delete s_instance;
+    }
     s_instance = new ProgramOptions();
 }
 
@@ -82,6 +86,7 @@ void ProgramOptions::parse(int argc, char** argv)
     int circ_flag = 0;
 
     optind = 1; // reset getopt()
+    opterr = 0; // Don't let getopt() print errors
 
     instance()->m_program_name = argv[0];
 
@@ -93,7 +98,7 @@ void ProgramOptions::parse(int argc, char** argv)
         {
         case 'b':
             bfs_flag = 1;
-            instance()->m_algorithm = ProgramOptions::AlgorithmSelection::BST;
+            instance()->m_algorithm = ProgramOptions::AlgorithmSelection::BFS;
             break;
         case 'f':
             ff_flag = 1;

@@ -10,8 +10,9 @@ int main(int argc, char** argv)
     {
         ProgramOptions::parse(argc, argv);
     }
-    catch (...)
+    catch (const std::string& error_text) // if the user mis-entered anything, just print the help.
     {
+        std::cerr << error_text << std::endl;
         ProgramOptions::print_help();
     }
 }
