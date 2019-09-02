@@ -93,9 +93,6 @@ public:
      */
     static int target_node();
 
-
-
-
 private:
     /**
      * @brief The hidden constructor for the ProgramOptions singleton.
