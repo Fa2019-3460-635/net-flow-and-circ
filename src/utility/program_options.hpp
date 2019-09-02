@@ -29,6 +29,8 @@ public:
 
     static void clear();
 
+    static void print_help();
+
 private:
     ProgramOptions();
     

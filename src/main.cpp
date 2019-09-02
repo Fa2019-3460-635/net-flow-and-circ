@@ -6,5 +6,12 @@
 
 int main(int argc, char** argv)
 {
-    ProgramOptions::parse(argc, argv);    
+    try
+    {
+        ProgramOptions::parse(argc, argv);
+    }
+    catch (...)
+    {
+        ProgramOptions::print_help();
+    }
 }

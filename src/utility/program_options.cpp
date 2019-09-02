@@ -48,6 +48,33 @@ void ProgramOptions::clear()
     s_instance = new ProgramOptions();
 }
 
+void ProgramOptions::print_help()
+{
+    std::cout << std::endl;
+    std::cout << " Usage: " << instance()->m_program_name << " -[b|f|c] <GRAPH-FILE> [source-node] [target-node]" << std::endl;
+    std::cout << std::endl;
+    std::cout << " Advance Algorithms Project #1: Network Flow and Circulation" << std::endl;
+    std::cout << std::endl;
+    std::cout << " One and only one of the following parameters must be selected." << std::endl;
+    std::cout << "    -b               Selects Breadth-First-Search, not compatible with -f or -c" << std::endl;
+    std::cout << "    -f               Selects Ford-Fulkerson Algorithm, not compatible with -b or -c" << std::endl;
+    std::cout << "    -c               Selects Circulation Problem, not compatible with -b or -f" << std::endl;
+    std::cout << std::endl;
+    std::cout << " This parameter is always required." << std::endl;
+    std::cout << "    GRAPH-FILE       The path to the file with the graph representation" << std::endl;
+    std::cout << std::endl;
+    std::cout << " The following parameters are necessary only if -b is used. They will be ignored with other selections" << std::endl;
+    std::cout << "    source-node      The number that identifies the desired source node" << std::endl;
+    std::cout << "    target-node      The number that identifies the desired target node" << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << " AUTHORS:" << std::endl;
+    std::cout << "       Sean Collins    <sgc29@zips.uakron.edu>" << std::endl;
+    std::cout << "    Andrew Robinson    <alr104@zips.uakron.edu>" << std::endl;
+    std::cout << "       Edwin Sarver    <els40@zips.uakron.edu>" << std::endl;
+
+}
+
 void ProgramOptions::parse(int argc, char** argv)
 {
     int bfs_flag = 0;
@@ -60,7 +87,7 @@ void ProgramOptions::parse(int argc, char** argv)
 
     // Handle flag arguments
     char c;
-    while ((c = (char)getopt(argc, argv, "bfc")) != -1)
+    while ((c = (char)getopt(argc, argv, "bfch")) != -1)
     {
         switch (c)
         {
@@ -76,6 +103,9 @@ void ProgramOptions::parse(int argc, char** argv)
             circ_flag = 1;
             instance()->m_algorithm = ProgramOptions::AlgorithmSelection::CIRCULATION;
             break;
+        case 'h':
+            print_help();
+            return;
         case '?':
             std::string error_string = "Unknown option \"";
             error_string += ((char)optopt);
