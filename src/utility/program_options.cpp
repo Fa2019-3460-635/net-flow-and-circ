@@ -91,6 +91,13 @@ void ProgramOptions::parse(int argc, char** argv)
     instance()->m_program_name = argv[0];
 
     // Handle flag arguments
+    // `getopt(argc, argv, <expected flags>)` only parses flag arguments (like -b)
+    // it returns and int that is one of the following:
+    // =>  -1 if there are no more flag args
+    // =>  the char of the expected flag, if found
+    // =>  '?' if a flag arg was found but was not in the expected flags.
+    // The returned value is as an int, so it will need to be converted to a char
+    // before it can be checked properly.
     char c;
     while ((c = (char)getopt(argc, argv, "bfch")) != -1)
     {
