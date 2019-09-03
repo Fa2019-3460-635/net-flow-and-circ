@@ -39,11 +39,11 @@ ctest # use '-V' option for more information.
 ```
 
 #### Option 3: ####
+**NOT YET IMPLEMENTED**
 ```bash
 cd bin/test
 ./*
 ```
-**NOT YET IMPLEMENTED**
 
 
 ### On Windows ###
