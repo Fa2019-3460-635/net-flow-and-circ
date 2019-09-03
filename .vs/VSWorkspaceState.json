@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\graph",
+    "\\test",
+    "\\test\\graph"
+  ],
+  "SelectedNode": "\\src\\graph\\bfs.hpp",
+  "PreviewInSolutionExplorer": false
+}
