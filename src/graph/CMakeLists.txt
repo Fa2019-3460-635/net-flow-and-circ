@@ -4,6 +4,7 @@ set(
   sources
   edge.cpp
   graph.cpp
+  bfs.cpp
 )
 set(
   headers
