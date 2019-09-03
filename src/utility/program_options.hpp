@@ -56,6 +56,11 @@ public:
      * @brief Parse the input options sent on the command line.
      *
      * Perform some basic error-checking.
+     * 
+     * Example inputs:
+     * `<program_name> -b file/path/name.ext 0 5`
+     * `<program_name> -f file/path/name.ext`
+     * `<program_name> -c file/path/name.ext`
      *
      * @throws std::string with the error-text.
      *

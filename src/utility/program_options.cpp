@@ -133,6 +133,7 @@ void ProgramOptions::parse(int argc, char** argv)
         throw error_string;
     }
 
+    // But make sure that at least one has been chosen.
     if ((bfs_flag + ff_flag + circ_flag) == 0)
     {
         std::string error_string = "No algorithm was selected.";
@@ -153,13 +154,13 @@ void ProgramOptions::parse(int argc, char** argv)
         throw "Too few positional arguments for selected algorithm.";
     }
 
+    //This may be kind of hacky, but I suppose we have to assume some things.
     for (int offset_optind = 0; optind + offset_optind < argc; offset_optind++)
     {
         remaining_args--;
         switch (offset_optind)
         {
         case 0:
-            // file
             instance()->m_graph_filepath = argv[offset_optind + optind];
             break;
         case 1:
