@@ -59,4 +59,3 @@ In a terminal within the project `build` directory after a build has been comple
 cd bin
 ./project-one
 ```
-**TODO** Move output executables the build/bin/ folder in CMake. 
