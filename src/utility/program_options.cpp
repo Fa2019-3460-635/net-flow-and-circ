@@ -190,6 +190,6 @@ ProgramOptions::ProgramOptions()
     : m_algorithm(ProgramOptions::AlgorithmSelection::NONE),
       m_graph_filepath(""),
       m_program_name(""),
-      m_source_node(INT_MIN),
-      m_target_node(INT_MIN)
+      m_source_node(-1),
+      m_target_node(-1)
 {}
