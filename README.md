@@ -1,6 +1,9 @@
 # Advanced Algorithms, Project 1 - Network Flow and Circulation with Demands Problem #
 
-**TODO** Write beautiful, concise description of our project.
+Demonstrate the solution to the Ford-Fulkerson algorithm using
+Breadth-First Search to determine the shortest path between the
+source and sink nodes. Using the same algorithm, solve the
+Circulation problem.
 
 ---
 
@@ -11,13 +14,40 @@
 In a terminal within the project directory:
 
 ```bash
-mkdir build
-cd build
-cmake ..
-make -j4 #use number of desired concurrent-build threads
+mkdir build # create a build folder in the project directory
+cd build # navigate into that build folder
+cmake .. # run cmake to generate makefiles
+make -j4 # build using 4 concurrent threads (increase the number if desired) 
 ```
 
 ### On Windows ###
+**TODO**
+
+---
+
+## Running the Application ##
+
+## On Linux ##
+In a terminal within the project `build` directory after a build has been completed:
+
+```bash
+cd bin
+# find the shortest path between nodes 0 and 16 from a graph given in graph.txt
+# by using the breadth-first search (BFS) algorithm. 
+./project-one -b graph.txt 0 16
+
+# find the maximum flow of the graph given in graph.txt by
+# using the Ford-Fulkerson method
+./project-one -f graph.txt
+
+# Determine wether the graph given in graph.txt has circulation
+./project-one -c graph.txt
+
+# Get usage information
+./project-one -h
+```
+
+## On Windows ##
 **TODO**
 
 ---
@@ -47,15 +77,3 @@ cd bin
 
 ### On Windows ###
 **TODO**
-
----
-
-## Running the Application ##
-
-## On Linux ##
-In a terminal within the project `build` directory after a build has been completed:
-
-```bash
-cd bin
-./project-one
-```
