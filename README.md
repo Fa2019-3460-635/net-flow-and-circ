@@ -34,17 +34,17 @@ In a terminal within the project `build` directory after a build has been comple
 cd bin
 # find the shortest path between nodes 0 and 16 from a graph given in graph.txt
 # by using the breadth-first search (BFS) algorithm. 
-./project-one -b graph.txt 0 16
+./project_one -b graph.txt 0 16
 
 # find the maximum flow of the graph given in graph.txt by
 # using the Ford-Fulkerson method
-./project-one -f graph.txt
+./project_one -f graph.txt
 
 # Determine wether the graph given in graph.txt has circulation
-./project-one -c graph.txt
+./project_one -c graph.txt
 
 # Get usage information
-./project-one -h
+./project_one -h
 ```
 
 ## On Windows ##
