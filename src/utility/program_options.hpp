@@ -94,7 +94,7 @@ public:
 
     /**
      * @brief Get the selected target node.
-     * @return If set, the id of the source node. Otherwise, -1.
+     * @return If set, the id of the target node. Otherwise, -1.
      */
     static int target_node();
 
