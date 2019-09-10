@@ -58,8 +58,8 @@ TEST (ProgramOptionsTests, CanParseValidFordFulkersonInput)
     EXPECT_EQ(ProgramOptions::selected_algorithm(),
               ProgramOptions::AlgorithmSelection::FORD_FULKERSON);
     EXPECT_EQ(ProgramOptions::graph_filepath(), "example.txt");
-    EXPECT_EQ(ProgramOptions::source_node(), INT_MIN);
-    EXPECT_EQ(ProgramOptions::target_node(), INT_MIN);
+    EXPECT_EQ(ProgramOptions::source_node(), -1);
+    EXPECT_EQ(ProgramOptions::target_node(), -1);
 }
 
 TEST (ProgramOptionsTests, CanParseValidCirculationInput)
@@ -87,7 +87,7 @@ TEST (ProgramOptionsTests, CanParseValidCirculationInput)
     EXPECT_EQ(ProgramOptions::selected_algorithm(),
               ProgramOptions::AlgorithmSelection::CIRCULATION);
     EXPECT_EQ(ProgramOptions::graph_filepath(), "example.txt");
-    EXPECT_EQ(ProgramOptions::source_node(), INT_MIN);
-    EXPECT_EQ(ProgramOptions::target_node(), INT_MIN);
+    EXPECT_EQ(ProgramOptions::source_node(), -1);
+    EXPECT_EQ(ProgramOptions::target_node(), -1);
 
 }

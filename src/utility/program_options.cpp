@@ -154,7 +154,8 @@ void ProgramOptions::parse(int argc, char** argv)
         throw "Too few positional arguments for selected algorithm.";
     }
 
-    //This may be kind of hacky, but I suppose we have to assume some things.
+    // Assume that the positional arguments will be in the correct order
+    // Assume that the given filepath is valid. Don't check it.
     for (int offset_optind = 0; optind + offset_optind < argc; offset_optind++)
     {
         remaining_args--;
@@ -190,6 +191,6 @@ ProgramOptions::ProgramOptions()
     : m_algorithm(ProgramOptions::AlgorithmSelection::NONE),
       m_graph_filepath(""),
       m_program_name(""),
-      m_source_node(INT_MIN),
-      m_target_node(INT_MIN)
+      m_source_node(-1),
+      m_target_node(-1)
 {}

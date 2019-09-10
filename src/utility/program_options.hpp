@@ -88,13 +88,13 @@ public:
 
     /**
      * @brief Get the selected source node.
-     * @return The id of the selected source node.
+     * @return If set, the id of the source node. Otherwise, -1.
      */
     static int source_node();
 
     /**
      * @brief Get the selected target node.
-     * @return The id of the selected target node.
+     * @return If set, the id of the target node. Otherwise, -1.
      */
     static int target_node();
 
