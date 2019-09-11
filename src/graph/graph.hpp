@@ -38,7 +38,6 @@ namespace graph {
     */
     bool parse(std::ifstream &input_data)
     {
-      input_data += '\0';
       adjacency_list.clear(); // clear the previous graph
       std::string input; // input will hold each line, one at a time
 
