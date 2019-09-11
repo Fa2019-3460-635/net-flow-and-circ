@@ -90,6 +90,10 @@ namespace graph {
     {
       return adjacency_list.size();
     }
+
+    std::vector<std::vector<edge>> get_adjacency_list() const{
+      return adjacency_list;
+    }
   };
 
 }  // namespace graph

@@ -18,13 +18,15 @@ namespace graph {
       int distance;
       std::vector<int> path;
       int parent;
+      int node_number;
 
       void reset()
       {
         color = bfs_color::WHITE;
-        distance = 0;
+        distance = -1;
         path.clear();
-        parent = 0;
+        parent = -1;
+        node_number = -1;
       }
     };
 
@@ -37,35 +39,7 @@ namespace graph {
      get taken into
      account in this algorithm.
     */
-    static std::vector<Graph::edge> bfs_shortest_path(Graph G, int source, int sink)
-    {
-      std::vector<Graph::edge> shortest_path;
-
-      std::vector<bfs_node> bfs_nodes;
-      int number_of_nodes = G.get_number_of_nodes();
-
-      for(int i =0; i < number_of_nodes;++i)
-      {
-        bfs_node new_bfs_node;
-        new_bfs_node.reset();
-        bfs_nodes.push_back(new_bfs_node);
-      }
-
-      bfs_nodes[source].color = bfs_node::bfs_color::GRAY;
-      bfs_nodes[source].distance = 0;
-      bfs_nodes[source].parent = -1;
-
-      std::queue<bfs_node*> node_queue;
-      node_queue.push(&bfs_nodes[source]);
-
-
-      return shortest_path;
-    }
-
-    void reset_bfs_nodes()
-    {
-      
-    }
+    static std::vector<int> bfs_shortest_path(graph::Graph &G, int source, int sink);
   };
 
 }  // namespace graph
