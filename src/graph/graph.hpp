@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <stdlib.h>
+#include <iostream>
 
 #include "edge.hpp"
 
@@ -69,6 +70,19 @@ namespace graph {
         }
 
         adjacency_list.push_back(node_edges); // after node_edges has been filled
+      }
+      return 1;
+    }
+
+    void print()
+    {
+      for(int x = 0; x< adjacency_list.size(); ++x)
+      {
+        std::cout << "Node " << x << " is connecte to nodes:\n";
+        for(int y = 0; y< adjacency_list[x].size();++y)
+        {
+          std::cout << adjacency_list[x][y].node << " with a capacity of " << adjacency_list[x][y].capacity << std::endl;
+        }
       }
     }
 

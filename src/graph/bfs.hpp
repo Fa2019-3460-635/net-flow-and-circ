@@ -37,7 +37,7 @@ namespace graph {
      get taken into
      account in this algorithm.
     */
-    std::vector<Graph::edge> bfs_shortest_path(Graph G, int source, int sink)
+    static std::vector<Graph::edge> bfs_shortest_path(Graph G, int source, int sink)
     {
       std::vector<Graph::edge> shortest_path;
 
