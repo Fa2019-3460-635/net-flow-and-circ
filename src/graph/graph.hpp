@@ -14,7 +14,7 @@ namespace graph {
     struct edge {
       int node;
       int capacity;
-    }
+    };
 
   private:
     std::vector<std::vector<edge>> adjacency_list;
@@ -70,6 +70,11 @@ namespace graph {
 
         adjacency_list.push_back(node_edges); // after node_edges has been filled
       }
+    }
+
+    int get_number_of_nodes()
+    {
+      return adjacency_list.size();
     }
   };
 
