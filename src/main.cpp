@@ -28,6 +28,7 @@ int main(int argc, char **argv)
       		{
       			std::cout << shortest_path[i] << ", ";
       		}
+      		std::cout << ProgramOptions::target_node();
       		std::cout << std::endl;
 
       	}else{

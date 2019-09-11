@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "bfs.hpp"
 
 std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int sink)
@@ -43,3 +44,6 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
   std::cout << "No Path found\n";
   return v;
 }
+=======
+#include "bfs.hpp"
+>>>>>>> 5931076495bb91f56bf64b1a8038314c4e03392a
