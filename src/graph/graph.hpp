@@ -1,55 +1,76 @@
 #pragma once
 
-#include <list>
-#include <map>
+#include <vector>
+#include <fstream>
+#include <stdlib.h>
 
 #include "edge.hpp"
 
 namespace graph {
 
-template <typename Key_t, typename Weight_t>
-class Graph {
+  class Graph {
 
- public:
-  using edge_type = Edge<Key_t, Weight_t>;
+  public:
+    struct edge {
+      int node;
+      int capacity;
+    }
 
- private:
-  std::map<Key_t, std::list<edge_type>> adjacency_list;
+  private:
+    std::vector<std::vector<edge>> adjacency_list;
 
- public:
-  void add_edge(Key_t n1, Key_t n2, Weight_t wt) {
-    add_node(n1);
-    add_node(n2);
-    adjacency_list.at(n1).emplace_back(n1, n2, wt);
-  }
+  public:
 
-  void add_node(Key_t key) {
-    if (contains(key)) return;
-    adjacency_list[key];
-  }
+    /*
+    parse() takes in a file stream, whose contents
+    should reflect the construction of a weighted
+    directed graph. There is one line in the stream for
+    each node in the graph. The naming conventions
+    starts with the first line being node 0. Lines may be blank.
+    On each line there should be an even number of integers.
+    The first integer represents which node is being
+    connected to, the second ineger is the capacity of the edge.
+    
+    This functions returns true if it has successfully
+    parsed the data into 'adjacency_list', and false
+    if it has encountered something unexpected.
+    */
+    bool parse(std::ifstream &input_data)
+    {
+      adjacency_list.clear(); // clear the previous graph
+      std::string input; // input will hold each line, one at a time
 
-  bool contains(Key_t key) const {
-    return adjacency_list.find(key) != adjacency_list.end();
-  }
+      while (std::getline(input_data, input)) {
+        std::vector<edge> node_edges;
+        std::vector<int> int_list; // int_list will hold the list of integers in a single line
+        int index = 0;
+        int i = 0;
 
-  /// Undefined behavior results if the given node is not
-  /// in the adjacency list.
-  std::list<edge_type> get_edges(Key_t key) const {
-    return adjacency_list.at(key);
-  }
+        
+        
+        if(input.length() != 0) { // special case where the node is not connected to anything
+          do {
+            ++i;
+            if ((input[i] == ' ') || (input[i] == '\0')) {
+              if (i - index != 0) {
+                int_list.push_back(atoi(input.substr(index, i - index).c_str()));
+              }
+              index = i + 1;
+            }
+          }
+          while (input[i] != '\0');
 
-  int get_num_nodes() const { return adjacency_list.size(); }
+          for (int i = 0; i < int_list.size(); i += 2) {
+            edge new_edge;
+            new_edge.node = int_list[i];
+            new_edge.capacity = int_list[i+1];
+            node_edges.push_back(new_edge);
+          }
+        }
 
-  int get_num_edges() const {
-    int count = 0;
-    for (auto entry : adjacency_list) count += entry.second.size();
-    return count;
-  }
-
-  std::map<Key_t,std::list<edge_type>> get_adjavency_list const
-  {
-    return adjacency_list;
-  }
-};
+        adjacency_list.push_back(node_edges); // after node_edges has been filled
+      }
+    }
+  };
 
 }  // namespace graph
