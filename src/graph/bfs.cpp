@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "bfs.hpp"
 
 std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int sink)
@@ -32,7 +31,6 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
         v->path = current_node->path;
         v->path.push_back(current_node->node_number);
         if(v->node_number == sink) {
-          std::cout << "Path Found for BFS\n";
           return v->path;
         }
         node_queue.push(v);
@@ -41,9 +39,5 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
 
   }
   std::vector<int> v;
-  std::cout << "No Path found\n";
   return v;
 }
-=======
-#include "bfs.hpp"
->>>>>>> 5931076495bb91f56bf64b1a8038314c4e03392a

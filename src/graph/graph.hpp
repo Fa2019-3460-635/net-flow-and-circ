@@ -3,10 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <stdlib.h>
-<<<<<<< HEAD
 #include <iostream>
-=======
->>>>>>> 5931076495bb91f56bf64b1a8038314c4e03392a
 
 #include "edge.hpp"
 
@@ -41,6 +38,7 @@ namespace graph {
     */
     bool parse(std::ifstream &input_data)
     {
+      input_data += '\0';
       adjacency_list.clear(); // clear the previous graph
       std::string input; // input will hold each line, one at a time
 
@@ -48,10 +46,7 @@ namespace graph {
         std::vector<edge> node_edges;
         std::vector<int> int_list; // int_list will hold the list of integers in a single line
         int index = 0;
-        int i = 0;
-<<<<<<< HEAD
-
-        
+        int i = 0; 
         
         if(input.length() != 0) { // special case where the node is not connected to anything
           do {
@@ -97,39 +92,6 @@ namespace graph {
 
     std::vector<std::vector<edge>> get_adjacency_list() const{
       return adjacency_list;
-=======
-
-        
-        
-        if(input.length() != 0) { // special case where the node is not connected to anything
-          do {
-            ++i;
-            if ((input[i] == ' ') || (input[i] == '\0')) {
-              if (i - index != 0) {
-                int_list.push_back(atoi(input.substr(index, i - index).c_str()));
-              }
-              index = i + 1;
-            }
-          }
-          while (input[i] != '\0');
-
-          for (int i = 0; i < int_list.size(); i += 2) {
-            edge new_edge;
-            new_edge.node = int_list[i];
-            new_edge.capacity = int_list[i+1];
-            node_edges.push_back(new_edge);
-          }
-        }
-
-        adjacency_list.push_back(node_edges); // after node_edges has been filled
-      }
-    }
-
-    int get_number_of_nodes()
-    {
-      return adjacency_list.size();
->>>>>>> 5931076495bb91f56bf64b1a8038314c4e03392a
     }
   };
-
 }  // namespace graph

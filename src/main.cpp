@@ -16,28 +16,34 @@ int main(int argc, char **argv)
     case ProgramOptions::AlgorithmSelection::NONE:
       break;
     case ProgramOptions::AlgorithmSelection::BFS:
-      std::ifstream in_file(ProgramOptions::graph_filepath(), std::ios::in);
+      std::ifstream in_file(ProgramOptions::graph_filepath());
       if(in_file.is_open()) {
-      	graph::Graph main_graph;
-      	if(main_graph.parse(in_file))
-      	{
-      		main_graph.print();
-      		std::vector<int> shortest_path = graph::Bfs::bfs_shortest_path(main_graph,ProgramOptions::source_node(),ProgramOptions::target_node());
-      		std::cout << "Shortest path from " << ProgramOptions::source_node() << " node, to " << ProgramOptions::target_node() << " node is\n";
-      		for(int i =0; i< shortest_path.size();++i)
-      		{
-      			std::cout << shortest_path[i] << ", ";
-      		}
-      		std::cout << ProgramOptions::target_node();
-      		std::cout << std::endl;
+        graph::Graph main_graph;
+        if(main_graph.parse(in_file)) {
+          //main_graph.print(); //this is nice for debugging
+          std::vector<int> shortest_path = graph::Bfs::bfs_shortest_path(main_graph, ProgramOptions::source_node(), ProgramOptions::target_node());
 
-      	}else{
-      		std::cout << "Failed to parse graph from file " << ProgramOptions::graph_filepath() << std::endl;
-      	}
+          if(shortest_path.size() == 0) {
+            std::cout << "There is no path from node " << ProgramOptions::source_node() << ", to node " << ProgramOptions::target_node() << "\n";
+            break;
+          }
+
+          std::cout << "Shortest path from node " << ProgramOptions::source_node() << ", to node " << ProgramOptions::target_node() << " is\n";
+          for(int i = 0; i < shortest_path.size(); ++i) {
+            std::cout << shortest_path[i] << ", ";
+          }
+          std::cout << ProgramOptions::target_node();
+          std::cout << std::endl;
+
+        }
+        else {
+          std::cout << "Failed to parse graph from file " << ProgramOptions::graph_filepath() << std::endl;
+        }
 
         in_file.close();
-      }else{
-      	std::cout << "Could not open file " << ProgramOptions::graph_filepath() << std::endl;
+      }
+      else {
+        std::cout << "Could not open file " << ProgramOptions::graph_filepath() << std::endl;
       }
       break;
     }
