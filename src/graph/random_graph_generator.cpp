@@ -30,25 +30,25 @@ namespace
 	};
 }
 
-static Random random;
+static Random rnd;
 
 RandomGraphGenerator::RandomGraphGenerator(int num_nodes, int num_edges)
 	: num_nodes{ num_nodes },
 	  num_edges{ num_edges },
 	  graph(num_nodes)
 {
-	if (random.is_initialized())
+	if (rnd.is_initialized())
 		return;
-	random.initialize();
+	rnd.initialize();
 }
 
 void RandomGraphGenerator::generate()
 {
 	for (int i = 0; i < num_edges; ++i)
 	{
-		int n1 = random.integer(num_nodes);
-		int n2 = random.integer(num_nodes);
-		int weight = random.integer();
+		int n1 = rnd.integer(num_nodes);
+		int n2 = rnd.integer(num_nodes);
+		int weight = rnd.integer();
 		graph.at(n1).emplace_back(n2, weight);
 	}
 }
