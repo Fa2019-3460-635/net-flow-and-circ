@@ -5,12 +5,14 @@ set(
   edge.cpp
   graph.cpp
   bfs.cpp
+  random_graph_generator.cpp
 )
 set(
   headers
   edge.hpp
   graph.hpp
   bfs.hpp
+  random_graph_generator.hpp
 )
 
 add_library(graph
