@@ -32,9 +32,7 @@ int main(int argc, char **argv)
           for(int i = 0; i < shortest_path.size(); ++i) {
             std::cout << shortest_path[i] << ", ";
           }
-          std::cout << ProgramOptions::target_node();
           std::cout << std::endl;
-
         }
         else {
           std::cout << "Failed to parse graph from file " << ProgramOptions::graph_filepath() << std::endl;

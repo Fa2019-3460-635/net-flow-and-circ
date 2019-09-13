@@ -31,7 +31,7 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
         v->path = current_node->path;
         v->path.push_back(current_node->node_number);
         if(v->node_number == sink) {
-          // TODO: Somewhere in here we are missing the final node. That or my test is wrong.
+          v->path.push_back(v->node_number);
           return v->path;
         }
         node_queue.push(v);
