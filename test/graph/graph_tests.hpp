@@ -3,49 +3,65 @@
 
 #include "graph.hpp"
 
-TEST (GraphTests, CanInstantiateAGraph)
+TEST(Graph, ParseTestFromProjectDefinition)
 {
-  graph::Graph<int, double> graph;
+   std::string test_file = R"(1 3 2 6 3 8
+2 2
+3 1
+)";
+   std::cout << "[" << test_file << "]" << std::endl;
+
+   auto *G = new graph::Graph();
+   std::istringstream file_stream(test_file);
+   G->parse(file_stream);
+
+   G->print();
+
+   auto adjacency_list = G->get_adjacency_list();
+
+   EXPECT_EQ(adjacency_list[0][0].node, 1);
+   EXPECT_EQ(adjacency_list[0][0].capacity, 3);
+   EXPECT_EQ(adjacency_list[0][1].node, 2);
+   EXPECT_EQ(adjacency_list[0][1].capacity, 6);
+   EXPECT_EQ(adjacency_list[0][2].node, 3);
+   EXPECT_EQ(adjacency_list[0][2].capacity, 8);
+
+   EXPECT_EQ(adjacency_list[1][0].node, 2);
+   EXPECT_EQ(adjacency_list[1][0].capacity, 2);
+
+   EXPECT_EQ(adjacency_list[2][0].node, 3);
+   EXPECT_EQ(adjacency_list[2][0].capacity, 1);
+
 }
 
-TEST (GraphTests, EmptyGraphDoesNotContainGivenNode)
+TEST(Graph, ParseTestBlankLines)
 {
-  graph::Graph<int, double> graph;
-  EXPECT_FALSE(graph.contains(1));
-}
+   std::string test_file = R"(1 3 2 6 3 8
 
-TEST (GraphTests, AddNodeWorks)
-{
-  graph::Graph<int, double> graph;
-  graph.add_node(1);
-  EXPECT_EQ(1, graph.get_num_nodes());
-  EXPECT_TRUE(graph.contains(1));
-}
+2 2
+3 1
+)";
+   std::cout << "[" << test_file << "]" << std::endl;
 
-TEST (GraphTests, AddEdgeWorks)
-{
-  graph::Graph<int, double> graph;
-  graph.add_edge(1, 2, 10);
-  graph.add_edge(1, 3, 20);
-  EXPECT_EQ(3, graph.get_num_nodes());
-  EXPECT_EQ(2, graph.get_num_edges());
-}
+   auto *G = new graph::Graph();
+   std::istringstream file_stream(test_file);
+   G->parse(file_stream);
 
-TEST (GraphTests, GetEdgesWorks)
-{
-  graph::Graph<int, double> graph;
+   G->print();
 
-  graph.add_edge(1, 2, 10);
-  graph.add_edge(1, 3, 20);
-  graph.add_edge(2, 3, 30);
+   auto adjacency_list = G->get_adjacency_list();
 
-  auto edges = graph.get_edges(1);
+   EXPECT_EQ(adjacency_list[0][0].node, 1);
+   EXPECT_EQ(adjacency_list[0][0].capacity, 3);
+   EXPECT_EQ(adjacency_list[0][1].node, 2);
+   EXPECT_EQ(adjacency_list[0][1].capacity, 6);
+   EXPECT_EQ(adjacency_list[0][2].node, 3);
+   EXPECT_EQ(adjacency_list[0][2].capacity, 8);
 
-  EXPECT_EQ(2, edges.size());
-  
-  for (auto const & edge : edges)
-  {
-    EXPECT_EQ(1, edge.get_node_one());
-    EXPECT_NE(1, edge.get_node_two());
-  }
+   EXPECT_EQ(adjacency_list[2][0].node, 2);
+   EXPECT_EQ(adjacency_list[2][0].capacity, 2);
+
+   EXPECT_EQ(adjacency_list[3][0].node, 3);
+   EXPECT_EQ(adjacency_list[3][0].capacity, 1);
+
 }

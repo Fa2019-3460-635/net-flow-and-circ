@@ -4,11 +4,13 @@ set(
   sources
   edge.cpp
   graph.cpp
+  bfs.cpp
 )
 set(
   headers
   edge.hpp
   graph.hpp
+  bfs.hpp
 )
 
 add_library(graph

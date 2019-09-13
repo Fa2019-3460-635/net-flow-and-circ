@@ -1,62 +1,61 @@
 #pragma once
 
-#include <list>
-#include <map>
+#include <vector>
+#include <fstream>
+#include <stdlib.h>
+#include <iostream>
 
 #include "edge.hpp"
 
-namespace graph
-{
+namespace graph {
 
-  template<typename Key_t, typename Weight_t>
-	class Graph
-	{
-	public:
-    using edge_type = Edge<Key_t, Weight_t>;
-
-  private:
-    std::map<Key_t, std::list<edge_type>> adjacency_list;
+  class Graph {
 
   public:
-    void add_edge (Key_t n1, Key_t n2, Weight_t wt)
-    {
-      add_node(n1);
-      add_node(n2);
-      adjacency_list.at(n1).emplace_back(n1, n2, wt);
-    }
+    struct edge {
+      int node;
+      int capacity;
+    };
 
-    void add_node (Key_t key)
-    {
-      if (contains(key))
-        return;
-      adjacency_list[key];
-    }
+  private:
+    std::vector<std::vector<edge>> m_adjacency_list;
 
-    bool contains (Key_t key) const
-    {
-      return adjacency_list.find(key) != adjacency_list.end();
-    }
+  public:
 
-    /// Undefined behavior results if the given node is not
-    /// in the adjacency list.
-    std::list<edge_type> get_edges (Key_t key) const
-    {
-      return adjacency_list.at(key);
-    }
+    Graph();
 
-    int get_num_nodes () const
-    {
-      return adjacency_list.size();
-    }
+    Graph(const std::vector<std::vector<edge>>& adjacency_list);
+    /**
+     * @brief parse() takes in a file stream, whose contents
+     * should reflect the construction of a weighted
+     * directed graph and instantiates the members of the graph.
+     *
+     * There is one line in the stream for
+     * each node in the graph. The naming conventions
+     * starts with the first line being node 0. Lines may be blank.
+     * On each line there should be an even number of integers.
+     * The first integer represents which node is being
+     * connected to, the second ineger is the capacity of the edge.
+     *
+     * This functions returns true if it has successfully
+     * parsed the data into 'adjacency_list', and false
+     * if it has encountered something unexpected.
+     *
+     * @param input_data
+     * @return true if the parse was successful, false otherwise.
+     */
+    bool parse(std::istream &input_data);
 
-    int get_num_edges () const
-    {
-      int count = 0;
-      for (auto entry : adjacency_list)
-        count += entry.second.size();
-      return count;
-    }
 
-	};
+    /**
+     * @brief Print a plain-text version of the contents of
+     * the graph directly to std::cout.
+     */
+    void print() const;
 
-} // namespace graph
+
+    unsigned long get_number_of_nodes();
+
+    std::vector<std::vector<edge>> get_adjacency_list() const;
+  };
+}  // namespace graph
