@@ -20,35 +20,26 @@ namespace graph {
       int parent;
       int node_number;
 
-      void reset()
-      {
-        color = bfs_color::WHITE;
-        distance = -1;
-        path.clear();
-        parent = -1;
-        node_number = -1;
-
-        distance = 0;
-        path.clear();
-        parent = 0;
-      }
+      void reset();
     };
 
   public:
-    /*
-     Return a vector that has the path from source node to
-     the destination
-     node. This path contains the least
-     ammount of EDGES. Edge weight does not
-     get taken into
-     account in this algorithm.
-    */
+
+    /**
+     * @brief Finds the shortest path from source to sink.
+     *
+     * The shortest path is determined by the number of edges
+     * not by weight.
+     *
+     * @param G: the graph in question
+     * @param source: The start node
+     * @param sink: The destination node
+     * @return A vector with the shortest path between source and sink,
+     * an empty vector, otherwise.
+     */
     static std::vector<int> bfs_shortest_path(graph::Graph &G, int source, int sink);
 
-    void reset_bfs_nodes()
-    {
-
-    }
+    void reset_bfs_nodes();
   };
 
 }  // namespace graph

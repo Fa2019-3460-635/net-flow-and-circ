@@ -31,6 +31,7 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
         v->path = current_node->path;
         v->path.push_back(current_node->node_number);
         if(v->node_number == sink) {
+          v->path.push_back(v->node_number);
           return v->path;
         }
         node_queue.push(v);
@@ -40,4 +41,21 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
   }
   std::vector<int> v;
   return v;
+}
+
+void graph::Bfs::reset_bfs_nodes()
+{
+
+}
+void graph::Bfs::bfs_node::reset()
+{
+    color = bfs_color::WHITE;
+    distance = -1;
+    path.clear();
+    parent = -1;
+    node_number = -1;
+
+    distance = 0;
+    path.clear();
+    parent = 0;
 }
