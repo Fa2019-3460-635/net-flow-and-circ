@@ -22,12 +22,12 @@ namespace {
       int start_vertex = 0, end_vertex = 0;
       while (start_vertex == end_vertex)
       {
-        start_vertex = Random::nonneg_int(num_vertices - 1);
-        end_vertex = Random::nonneg_int(num_vertices - 1);
+        start_vertex = Random::nonneg_int(0, num_vertices - 1);
+        end_vertex = Random::nonneg_int(0, num_vertices - 1);
       }
 
       // generate random weight
-      int weight = Random::nonneg_int(std::numeric_limits<int>::max());
+      int weight = Random::nonneg_int(0, std::numeric_limits<int>::max());
 
       // add the edge to the graph
       graph::Graph::edge e;

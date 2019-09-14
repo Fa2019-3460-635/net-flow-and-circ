@@ -1,12 +1,19 @@
 #include <iostream>
+
+#include "bfs.hpp"
+#include "random.hpp"
+#include "random_graph.hpp"
 #include "tree.hpp"
 
 void bfs_measurements (Tree & measurements)
 {
   // configure test parameters
-  int const NUM_SAMPLES = 100000;
-  int const MAX_NUM_EDGES = 10000;
-  int const MAX_NUM_VERTICES = 10000;
+  int const NUM_SAMPLES = 1000;
+
+  int const MIN_NUM_EDGES = 10;
+  int const MAX_NUM_EDGES = 1000;
+  int const MIN_NUM_VERTICES = 10;
+  int const MAX_NUM_VERTICES = 100;
 
   // record number of samples
   measurements.add({"bfs", "num_samples"}, std::to_string(NUM_SAMPLES));
@@ -14,13 +21,21 @@ void bfs_measurements (Tree & measurements)
   // take the measurements
   for (int i = 0; i < NUM_SAMPLES; ++i)
   {
-    // TODO: Randomize
-    int num_edges = 5;
-    int num_vertices = 5;
-
     // Generate a random grapn
+    int num_vertices = Random::nonneg_int(MIN_NUM_VERTICES, MAX_NUM_VERTICES);
+    int num_edges = Random::nonneg_int(MAX_NUM_VERTICES, MAX_NUM_EDGES);
+    RandomGraph graph (num_vertices, num_edges);
+
+    // Generate random source and sink vertices
+    int source = 0, sink = 0;
+    while (source == sink)
+    {
+      source = Random::nonneg_int(0, num_vertices - 1);
+      sink = Random::nonneg_int(0, num_vertices - 1);
+    }
 
     // Measure duration of BFS algorithm
+    graph::Bfs::bfs_shortest_path(graph, source, sink);
 
     // Record Sample Data
     std::string label = "Sample " + std::to_string(i);

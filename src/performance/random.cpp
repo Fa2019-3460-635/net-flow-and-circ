@@ -1,5 +1,6 @@
 #include "random.hpp"
 
+#include <cassert>
 #include <ctime>
 #include <random>
 
@@ -12,10 +13,11 @@ static void initialize ()
   s_initialized = true;
 }
 
-int Random::nonneg_int (int max)
+int Random::nonneg_int (int min, int max)
 {
+  assert(0 <= min && min <= max);
   if (!s_initialized)
     initialize();
-  std::uniform_int_distribution<int> distribution(0, max);
+  std::uniform_int_distribution<int> distribution(min, max);
   return distribution(s_engine);
 }

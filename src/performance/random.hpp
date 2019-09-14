@@ -4,10 +4,10 @@ class Random
 {
 public:
   /**
-   * Returns an integer in range from [0, 'max'] (inclusive)
+   * Returns an integer in range from ['min', 'max'] (inclusive)
    * 
    * Preconditions:
-   *  - 'max' shall be a positive integer. (Undefined behavior results if <= 0)
+   *  - 0 <= min <= max
    */
-  static int nonneg_int (int max);
+  static int nonneg_int (int min, int max);
 };
