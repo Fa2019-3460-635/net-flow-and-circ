@@ -56,6 +56,8 @@ namespace graph {
 
     unsigned long get_number_of_nodes();
 
+    unsigned long get_number_of_edges();
+
     std::vector<std::vector<edge>> get_adjacency_list() const;
   };
 }  // namespace graph

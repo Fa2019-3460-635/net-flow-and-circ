@@ -1,12 +1,14 @@
 set(
 	sources
-	random_graph_generator.cpp
+  random.cpp
+  random_graph.cpp
   tree.cpp
 )
 
 set(
 	headers
-	random_graph_generator.hpp
+  random.hpp
+  random_graph.hpp
   tree.hpp
 )
 

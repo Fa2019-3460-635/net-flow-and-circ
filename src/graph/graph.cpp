@@ -72,6 +72,14 @@ unsigned long graph::Graph::get_number_of_nodes()
     return m_adjacency_list.size();
 }
 
+unsigned long graph::Graph::get_number_of_edges()
+{
+  unsigned long num_edges = 0;
+  for (auto const & node : m_adjacency_list)
+    num_edges += node.size();
+  return num_edges;
+}
+
 std::vector<std::vector<graph::Graph::edge> > graph::Graph::get_adjacency_list() const{
     return m_adjacency_list;
 }
