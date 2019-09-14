@@ -1,19 +1,21 @@
 #include "random.hpp"
 
-#include <cstdlib>
 #include <ctime>
+#include <random>
 
+static std::default_random_engine s_engine;
 static bool s_initialized = false;
 
 static void initialize ()
 {
-  std::srand(std::time(nullptr));
+  s_engine.seed(std::time(nullptr));
   s_initialized = true;
 }
 
-int Random::nonneg_int (int bound)
+int Random::nonneg_int (int max)
 {
   if (!s_initialized)
     initialize();
-  return std::rand() % bound;
+  std::uniform_int_distribution<int> distribution(0, max);
+  return distribution(s_engine);
 }

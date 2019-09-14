@@ -22,8 +22,8 @@ namespace {
       int start_vertex = 0, end_vertex = 0;
       while (start_vertex == end_vertex)
       {
-        start_vertex = Random::nonneg_int(num_vertices);
-        end_vertex = Random::nonneg_int(num_vertices);
+        start_vertex = Random::nonneg_int(num_vertices - 1);
+        end_vertex = Random::nonneg_int(num_vertices - 1);
       }
 
       // generate random weight
