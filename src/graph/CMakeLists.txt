@@ -5,7 +5,6 @@ set(
   bfs.cpp
   edge.cpp
   graph.cpp
-  random_graph_generator.cpp
 )
 
 set(
@@ -13,7 +12,6 @@ set(
   bfs.hpp
   edge.hpp
   graph.hpp
-  random_graph_generator.hpp
 )
 
 add_library(graph
