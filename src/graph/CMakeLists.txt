@@ -2,16 +2,17 @@ set (CMAKE_CXX_STANDARD 11)
 
 set(
   sources
+  bfs.cpp
   edge.cpp
   graph.cpp
-  bfs.cpp
   random_graph_generator.cpp
 )
+
 set(
   headers
+  bfs.hpp
   edge.hpp
   graph.hpp
-  bfs.hpp
   random_graph_generator.hpp
 )
 
