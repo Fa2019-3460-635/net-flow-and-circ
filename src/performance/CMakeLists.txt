@@ -2,6 +2,7 @@ set(
 	sources
   random.cpp
   random_graph.cpp
+  timer.cpp
   tree.cpp
 )
 
@@ -9,6 +10,7 @@ set(
 	headers
   random.hpp
   random_graph.hpp
+  timer.hpp
   tree.hpp
 )
 

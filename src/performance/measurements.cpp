@@ -1,15 +1,39 @@
+#include <fstream>
 #include <iostream>
 
 #include "bfs.hpp"
 #include "random.hpp"
 #include "random_graph.hpp"
+#include "timer.hpp"
 #include "tree.hpp"
+
+//==============================================================================
+// function prototypes
+//==============================================================================
+
+void bfs_measurements (Tree &);
+
+//==============================================================================
+// main function
+//==============================================================================
+
+int main ()
+{
+  // measure the BFS algorithm
+	Tree measurement_data;
+  bfs_measurements(measurement_data);
+  std::ofstream out_file("bfs.json");
+  measurement_data.write(out_file);
+}
+
+//==============================================================================
+// helper function implementations
+//==============================================================================
 
 void bfs_measurements (Tree & measurements)
 {
   // configure test parameters
-  int const NUM_SAMPLES = 1000;
-
+  int const NUM_SAMPLES = 10000;
   int const MIN_NUM_EDGES = 10;
   int const MAX_NUM_EDGES = 1000;
   int const MIN_NUM_VERTICES = 10;
@@ -35,19 +59,15 @@ void bfs_measurements (Tree & measurements)
     }
 
     // Measure duration of BFS algorithm
+    Timer timer;
+    auto start_ms = timer.milliseconds();
     graph::Bfs::bfs_shortest_path(graph, source, sink);
+    auto end_ms = timer.milliseconds();
 
     // Record Sample Data
-    std::string label = "Sample " + std::to_string(i);
-    measurements.add({"bfs", label, "num_edges"}, std::to_string(num_edges));
+    std::string label = std::to_string(i);
+    measurements.add({"bfs", label, "num_edges"},    std::to_string(num_edges));
     measurements.add({"bfs", label, "num_vertices"}, std::to_string(num_vertices));
-    //measurements.add({"bfs", label, "milliseconds"}, std::to_string(milliseconds));
+    measurements.add({"bfs", label, "milliseconds"}, std::to_string(end_ms - start_ms));
   }
-}
-
-int main ()
-{
-	Tree measurement_data;
-  bfs_measurements(measurement_data);
-  measurement_data.write(std::cout);
 }
