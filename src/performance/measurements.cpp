@@ -11,7 +11,29 @@
 // function prototypes
 //==============================================================================
 
-void bfs_measurements (Tree &);
+/**
+ * Randomly generates a set of graphs, a starting node, and an ending node.
+ * Measures the milliseconds that elapse while the BFS algorithm is applied
+ * to each graph.
+ * Writes the graph size and BFS duration to the given output stream using the
+ * following JSON schema:
+ *
+ * "bfs": {
+ *   "0": {
+ *     "milliseconds": "0.001",
+ *     "num_edges": "10",
+ *     "num_vertices": "100"
+ *   }, 
+ *   "1": {
+ *     "milliseconds": "0.001",
+ *     "num_edges": "20",
+ *     "num_vertices": "200"
+ *   },  
+ *   ...
+ * }
+ *
+ */
+void bfs_measurements (std::ostream &);
 
 //==============================================================================
 // main function
@@ -20,18 +42,17 @@ void bfs_measurements (Tree &);
 int main ()
 {
   // measure the BFS algorithm
-	Tree measurement_data;
-  bfs_measurements(measurement_data);
-  std::ofstream out_file("bfs.json");
-  measurement_data.write(out_file);
+  bfs_measurements(std::cout);
 }
 
 //==============================================================================
 // helper function implementations
 //==============================================================================
 
-void bfs_measurements (Tree & measurements)
+void bfs_measurements (std::ostream & out_stream)
 {
+  Tree measurements;
+
   // configure test parameters
   int const NUM_SAMPLES = 10000;
   int const MIN_NUM_EDGES = 10;
@@ -70,4 +91,7 @@ void bfs_measurements (Tree & measurements)
     measurements.add({"bfs", label, "num_vertices"}, std::to_string(num_vertices));
     measurements.add({"bfs", label, "milliseconds"}, std::to_string(end_ms - start_ms));
   }
+
+  // write the measurements to the output stream
+  measurements.write(out_stream);
 }
