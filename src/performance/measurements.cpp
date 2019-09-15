@@ -42,7 +42,10 @@ void bfs_measurements (std::ostream &);
 int main ()
 {
   // measure the BFS algorithm
-  bfs_measurements(std::cout);
+  std::ofstream out_file ("bfs.json");
+  bfs_measurements(out_file);
+  
+  std::cout << "Done.\n";
 }
 
 //==============================================================================
@@ -54,10 +57,10 @@ void bfs_measurements (std::ostream & out_stream)
   Tree measurements;
 
   // configure test parameters
-  int const NUM_SAMPLES = 10000;
+  int const NUM_SAMPLES = 100000;
   int const MIN_NUM_EDGES = 10;
   int const MAX_NUM_EDGES = 1000;
-  int const MIN_NUM_VERTICES = 10;
+  int const MIN_NUM_VERTICES = 1;
   int const MAX_NUM_VERTICES = 100;
 
   // record number of samples
