@@ -5,12 +5,14 @@ set(
   edge.cpp
   graph.cpp
   bfs.cpp
+  fordfulkerson.cpp
 )
 set(
   headers
   edge.hpp
   graph.hpp
   bfs.hpp
+  fordfulkerson.hpp
 )
 
 add_library(graph
