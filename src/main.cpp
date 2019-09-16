@@ -50,8 +50,7 @@ int main(int argc, char **argv)
       if(in_file.is_open()) {
         graph::Graph main_graph;
         if(main_graph.parse(in_file)) {
-          main_graph.print();
-          std::cout << "The maximum flow is" << graph::FordFulkerson::max_flow(main_graph) << std::endl;
+          std::cout << "The maximum flow is " << graph::FordFulkerson::max_flow(main_graph) << std::endl;
         }
       }
       else {

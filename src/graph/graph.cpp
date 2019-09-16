@@ -36,13 +36,13 @@ bool graph::Graph::parse(std::istream &input_data)
               added++;
             }
         }
-
+/*
         if (added < 2)
         {
             int_list.push_back(-1);
             int_list.push_back(-1);
         }
-
+*/
         for (unsigned int i = 0; i < int_list.size(); i += 2) {
           edge new_edge;
           new_edge.node = int_list[i];

@@ -121,8 +121,8 @@ namespace graph {
         if(m_adjacency_list[x].size() == 0) { //if the node has no edges (points to nothing)
           return x;
         }
-        return -1;
       }
+      return -1; //fail
     }
 
 
