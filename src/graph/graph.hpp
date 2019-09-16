@@ -15,6 +15,7 @@ namespace graph {
     struct edge {
       int node;
       int capacity;
+      int flow = 0;
     };
 
   private:
@@ -90,6 +91,17 @@ namespace graph {
      * @return the capacity of the given path
      */
     int get_capacity_of_path(std::vector<int> path);
+
+
+    /**
+     * @brief Get the residual graph based on the original graph, the augmenting path, and
+     * the increased flow along the path
+     * @param G: The graph to augment
+     * @param p: the augmenting path
+     * @param f: the flow along the augmenting path
+     * @return Gf, the residual graph.
+     */
+    static Graph get_residual_graph(const Graph& G, std::vector<int> p, int f);
 
   private:
     std::vector<int> m_sources;

@@ -23,7 +23,10 @@ int graph::fordfulkerson::run(graph::Graph& G)
 
         int capacity = Gf.get_capacity_of_path(p);
 
+        Gf = graph::Graph::get_residual_graph(Gf, p, capacity);
+
         f += capacity;
+
 
     }
     while (p.size() > 0);

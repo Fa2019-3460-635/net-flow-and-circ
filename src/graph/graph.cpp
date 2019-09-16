@@ -186,3 +186,35 @@ int graph::Graph::get_capacity_of_path(std::vector<int> path)
    return min_capacity;
 }
 
+graph::Graph graph::Graph::get_residual_graph(const graph::Graph &G, std::vector<int> p, int f)
+{
+    graph::Graph Gf = G;
+
+    //for each node in p contained in G
+    std::vector<std::vector<edge>> adj = Gf.get_adjacency_list();
+    for(int i = 0; i < p.size() - 1; i++)
+    {
+        // add an edge going from p[i + 1] to p[i] with a capacity of f
+        graph::Graph::edge new_edge;
+        new_edge.node = p[i];
+        new_edge.capacity = f;
+        adj[p[i+1]].push_back(new_edge);
+
+        for(int j = 0; j < adj[p[i]].size(); j++)
+        {
+            if (adj[p[i]][j].node == p[i+1])
+            {
+                // subtract f from the capacity of the edge from p[i] to p[i + 1]
+                adj[p[i]][j].capacity -= f;
+
+                // add f to the flow of the edge from p[i] to p[i+1]
+                adj[p[i]][j].flow += f;
+                break;
+            }
+        }
+    }
+
+
+    return Gf;
+}
+
