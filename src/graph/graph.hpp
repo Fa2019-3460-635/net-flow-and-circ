@@ -15,6 +15,7 @@ namespace graph {
     struct edge {
       int node;
       int capacity;
+      int flow = 0;
     };
 
   private:
@@ -52,7 +53,7 @@ namespace graph {
      * the graph directly to std::cout.
      */
     void print() const;
-
+    
     void reduce_edge_capacity(int start_node, int end_node, int amount)
     {
       // search through each edge connected to the start node
@@ -139,5 +140,39 @@ namespace graph {
     unsigned long get_number_of_nodes();
 
     std::vector<std::vector<edge>> get_adjacency_list() const;
+
+    /**
+     * @brief Find the sources for this graph
+     * @return a list of source-node indicies.
+     */
+    std::vector<int> get_sources();
+
+    /**
+     * @brief Find the sinks for this graph
+     * @return a list of sink-node indicies.
+     */
+    std::vector<int> get_sinks();
+
+    /**
+     * @brief get_capacity_of_path
+     * @param path: The path to traverse
+     * @return the capacity of the given path
+     */
+    int get_capacity_of_path(std::vector<int> path);
+
+
+    /**
+     * @brief Get the residual graph based on the original graph, the augmenting path, and
+     * the increased flow along the path
+     * @param G: The graph to augment
+     * @param p: the augmenting path
+     * @param f: the flow along the augmenting path
+     * @return Gf, the residual graph.
+     */
+    static Graph get_residual_graph(const Graph& G, std::vector<int> p, int f);
+
+  private:
+    std::vector<int> m_sources;
+    std::vector<int> m_sinks;
   };
 }  // namespace graph
