@@ -25,7 +25,7 @@ namespace graph {
 
     Graph();
 
-    Graph(const std::vector<std::vector<edge>>& adjacency_list);
+    Graph(const std::vector<std::vector<edge>> &adjacency_list);
     /**
      * @brief parse() takes in a file stream, whose contents
      * should reflect the construction of a weighted
@@ -53,21 +53,89 @@ namespace graph {
      * the graph directly to std::cout.
      */
     void print() const;
+    
+    void reduce_edge_capacity(int start_node, int end_node, int amount)
+    {
+      // search through each edge connected to the start node
+      for(int i = 0; i < m_adjacency_list[start_node].size(); ++i) {
+        // when you find the correct end node
+        if(m_adjacency_list[start_node][i].node == end_node) {
+          // reduce the capacity
+          m_adjacency_list[start_node][i].capacity -= amount;
+          // if the capacity is then zero, delete the node
+          if(m_adjacency_list[start_node][i].capacity == 0) {
+            m_adjacency_list[start_node][i] = m_adjacency_list[start_node].back();
+            m_adjacency_list[start_node].pop_back();
+          }
+          return;
+        }
+      }
+    }
 
-    /**
-     * @brief Transforms the graph to a single-source, single-sink graph.
-     *
-     * The graph is transformed into a single-source, single sinke graph
-     * by pushing a new node to the end of the adjacency list that has
-     * edges with MAX_INT capacity connecting to each source and
-     * edges with MAX_INT capacity connecting from each sink.
-     *
-     * A new source is only added if there are multiple sources.
-     * Likewise, a new sink is only added if there are multiple sinks.
-     *
-     * @param G: A graph that may have more than one source or sink
-     */
-    static Graph transform_to_single_source_sink(const Graph& G);
+    void increase_edge_capacity(int start_node, int end_node, int amount)
+    {
+      // search through each edge connected to the start node
+      for(int i = 0; i < m_adjacency_list[start_node].size(); ++i) {
+        // when you find the correct end node
+        if(m_adjacency_list[start_node][i].node == end_node) {
+          // increase the capacity
+          m_adjacency_list[start_node][i].capacity += amount;
+          return;
+        }
+      }
+
+      // if the edge was not in the graph, create it and add it
+      edge new_edge;
+      new_edge.node = end_node;
+      new_edge.capacity = amount;
+      m_adjacency_list[start_node].push_back(new_edge);
+      return;
+    }
+
+    /* The source will have no edges pointing to it*/
+    int find_source()
+    {
+      std::vector<bool> points_to;
+
+      for(int i = 0; i < m_adjacency_list.size(); ++i) {
+        points_to.push_back(false); /* Start with nothing being pointed to*/
+      }
+
+      for(int x = 0; x < m_adjacency_list.size(); ++x) {
+        for(int y = 0; y < m_adjacency_list[x].size(); ++y) {
+          points_to[m_adjacency_list[x][y].node] = true;
+        }
+      }
+
+      for(int i = 0; i < points_to.size(); ++i) {
+        if(points_to[i] == false) {
+          return i;
+        }
+      }
+      return -1; //fail
+    }
+
+    //sink points to nothing
+    int find_sink()
+    {
+      for(int x = 0; x < m_adjacency_list.size(); ++x) {
+        if(m_adjacency_list[x].size() == 0) { //if the node has no edges (points to nothing)
+          return x;
+        }
+      }
+      return -1; //fail
+    }
+
+
+    // this function finds the sum of the capacity leaving a node
+    int total_capacity_out(int node)
+    {
+      int total_capacity = 0;
+      for(int i = 0; i < m_adjacency_list[node].size(); ++i) {
+        total_capacity += m_adjacency_list[node][i].capacity;
+      }
+      return total_capacity;
+    }
 
     unsigned long get_number_of_nodes();
 

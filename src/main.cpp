@@ -5,6 +5,7 @@
 #include <program_options.hpp>
 #include <graph.hpp>
 #include <bfs.hpp>
+#include <fordfulkerson.hpp>
 #include <fstream>
 
 int main(int argc, char **argv)
@@ -12,11 +13,12 @@ int main(int argc, char **argv)
   try {
     ProgramOptions::parse(argc, argv);
 
+    std::ifstream in_file(ProgramOptions::graph_filepath());
+
     switch(ProgramOptions::selected_algorithm()) {
     case ProgramOptions::AlgorithmSelection::NONE:
       break;
     case ProgramOptions::AlgorithmSelection::BFS:
-      std::ifstream in_file(ProgramOptions::graph_filepath());
       if(in_file.is_open()) {
         graph::Graph main_graph;
         if(main_graph.parse(in_file)) {
@@ -32,9 +34,7 @@ int main(int argc, char **argv)
           for(int i = 0; i < shortest_path.size(); ++i) {
             std::cout << shortest_path[i] << ", ";
           }
-          std::cout << ProgramOptions::target_node();
           std::cout << std::endl;
-
         }
         else {
           std::cout << "Failed to parse graph from file " << ProgramOptions::graph_filepath() << std::endl;
@@ -45,6 +45,18 @@ int main(int argc, char **argv)
       else {
         std::cout << "Could not open file " << ProgramOptions::graph_filepath() << std::endl;
       }
+      break;
+    case ProgramOptions::AlgorithmSelection::FORD_FULKERSON:
+      if(in_file.is_open()) {
+        graph::Graph main_graph;
+        if(main_graph.parse(in_file)) {
+          std::cout << "The maximum flow is " << graph::FordFulkerson::max_flow(main_graph) << std::endl;
+        }
+      }
+      else {
+        std::cout << "Could not open file " << ProgramOptions::graph_filepath() << std::endl;
+      }
+      in_file.close();
       break;
     }
   }

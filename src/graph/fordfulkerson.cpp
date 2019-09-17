@@ -1,36 +1,25 @@
 #include "fordfulkerson.hpp"
+#include "graph.hpp"
+#include "bfs.hpp"
 
-int graph::fordfulkerson::run(graph::Graph& G)
+int graph::FordFulkerson::max_flow(graph::Graph &G)
 {
-    // initialize flow 'f' to 0
-    int f = 0;
+  int source = G.find_source();
+  int sink = G.find_sink();
 
-    graph::Graph Gf = G;
+  graph::Bfs::bfs_fordfulkerson_data ff_data = graph::Bfs::bfs_fordfulkerson(G, source, sink);
 
-    if(Gf.get_sources().size() > 1 || Gf.get_sinks().size() > 1)
-    {
-        Gf.transform_to_single_source_sink(Gf);
+  while(ff_data.path.size() != 0) { //while there is a path
+    for(int i = 0; i < ff_data.path.size() - 1; ++i) {
+      G.reduce_edge_capacity(ff_data.path[i], ff_data.path[i + 1], ff_data.minimum_capacity); //decrease forward capacity
     }
 
-    int s = Gf.get_sources()[0];
-    int t = Gf.get_sinks()[0];
-
-    //while there exists an augmenting path 'p' in the residual network 'Gf'
-    std::vector<int> p;
-    do
-    {
-        p = graph::Bfs::bfs_shortest_path(Gf, s, t);
-
-        int capacity = Gf.get_capacity_of_path(p);
-
-        Gf = graph::Graph::get_residual_graph(Gf, p, capacity);
-
-        f += capacity;
-
-
+    for(int i = ff_data.path.size() - 1; i > 0; --i) {
+      G.increase_edge_capacity(ff_data.path[i], ff_data.path[i - 1], ff_data.minimum_capacity); //increase backward capacity
     }
-    while (p.size() > 0);
-        // augment flow 'f' along 'p' by the minimum capacity in 'p'
 
-        //return 'f'
+    ff_data = graph::Bfs::bfs_fordfulkerson(G, source, sink); //check for new path
+  }
+
+  return G.total_capacity_out(sink); //the total flow is the same as the outward capacity of the sink
 }

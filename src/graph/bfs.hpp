@@ -19,8 +19,15 @@ namespace graph {
       std::vector<int> path;
       int parent;
       int node_number;
+      int minimum_capacity;
 
       void reset();
+    };
+
+    struct bfs_fordfulkerson_data
+    {
+      std::vector<int> path;
+      int minimum_capacity;
     };
 
   public:
@@ -38,6 +45,7 @@ namespace graph {
      * an empty vector, otherwise.
      */
     static std::vector<int> bfs_shortest_path(graph::Graph &G, int source, int sink);
+    static bfs_fordfulkerson_data bfs_fordfulkerson(graph::Graph &G, int source, int sink);
 
     void reset_bfs_nodes();
   };
