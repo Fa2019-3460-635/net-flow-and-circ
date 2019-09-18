@@ -50,6 +50,9 @@ int main(int argc, char **argv)
       if(in_file.is_open()) {
         graph::Graph main_graph;
         if(main_graph.parse(in_file)) {
+          // Ensure that the graph has a single source and sink
+          main_graph = graph::Graph::transform_to_single_source_sink(main_graph);
+          // get the maximum flow through that network
           std::cout << "The maximum flow is " << graph::FordFulkerson::max_flow(main_graph) << std::endl;
         }
       }

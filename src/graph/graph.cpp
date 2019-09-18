@@ -37,13 +37,7 @@ bool graph::Graph::parse(std::istream &input_data)
               added++;
             }
         }
-/*
-        if (added < 2)
-        {
-            int_list.push_back(-1);
-            int_list.push_back(-1);
-        }
-*/
+
         for (unsigned int i = 0; i < int_list.size(); i += 2) {
           edge new_edge;
           new_edge.node = int_list[i];
@@ -66,6 +60,88 @@ void graph::Graph::print() const
           std::cout << m_adjacency_list[x][y].node << " with a capacity of " << m_adjacency_list[x][y].capacity << std::endl;
         }
       }
+}
+
+
+void graph::Graph::reduce_edge_capacity(int start_node, int end_node, int amount)
+{
+  // search through each edge connected to the start node
+  for(int i = 0; i < m_adjacency_list[start_node].size(); i++) {
+    // when you find the correct end node
+    if(m_adjacency_list[start_node][i].node == end_node) {
+      // reduce the capacity
+      m_adjacency_list[start_node][i].capacity -= amount;
+      // if the capacity is then zero, delete the node
+      if(m_adjacency_list[start_node][i].capacity == 0) {
+        m_adjacency_list[start_node][i] = m_adjacency_list[start_node].back();
+        m_adjacency_list[start_node].pop_back();
+      }
+      return;
+    }
+  }
+}
+
+
+void graph::Graph::increase_edge_capacity(int start_node, int end_node, int amount)
+{
+  // search through each edge connected to the start node
+  for(int i = 0; i < m_adjacency_list[start_node].size(); i++) {
+    // when you find the correct end node
+    if(m_adjacency_list[start_node][i].node == end_node) {
+      // increase the capacity
+      m_adjacency_list[start_node][i].capacity += amount;
+      return;
+    }
+  }
+
+  // if the edge was not in the graph, create it and add it
+  edge new_edge;
+  new_edge.node = end_node;
+  new_edge.capacity = amount;
+  m_adjacency_list[start_node].push_back(new_edge);
+  return;
+}
+
+
+int graph::Graph::find_source()
+{
+  std::vector<bool> points_to;
+
+  for(int i = 0; i < m_adjacency_list.size(); i++) {
+    points_to.push_back(false); /* Start with nothing being pointed to*/
+  }
+
+  for(int x = 0; x < m_adjacency_list.size(); x++) {
+    for(int y = 0; y < m_adjacency_list[x].size(); y++) {
+      points_to[m_adjacency_list[x][y].node] = true;
+    }
+  }
+
+  for(int i = 0; i < points_to.size(); i++) {
+    if(points_to[i] == false) {
+      return i;
+    }
+  }
+  return -1; //fail
+}
+
+int graph::Graph::find_sink()
+{
+  for(int x = 0; x < m_adjacency_list.size(); x++) {
+    if(m_adjacency_list[x].size() == 0) { //if the node has no edges (points to nothing)
+      return x;
+    }
+  }
+  return -1; //fail
+}
+
+int graph::Graph::total_capacity_out(int node)
+{
+  int total_capacity = 0;
+  for(int i = 0; i < m_adjacency_list[node].size(); i++) {
+    total_capacity += m_adjacency_list[node][i].capacity;
+  }
+  return total_capacity;
 }
 
 graph::Graph graph::Graph::transform_to_single_source_sink(const graph::Graph& G)
