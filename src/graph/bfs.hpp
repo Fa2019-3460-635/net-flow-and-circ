@@ -21,6 +21,10 @@ namespace graph {
       int node_number;
       int minimum_capacity;
 
+      /**
+       * @brief Reset all the members of the bfs_node struct
+       * to defaults
+       */
       void reset();
     };
 
@@ -45,9 +49,18 @@ namespace graph {
      * an empty vector, otherwise.
      */
     static std::vector<int> bfs_shortest_path(graph::Graph &G, int source, int sink);
+
+    /**
+     * @brief give the shortest path and minimum capacity
+     *
+     * @param G: The graph in question
+     * @param source: the start node
+     * @param sink: the destination node
+     * @return A struct with the shortest path from source to sink represented as a std::vector<int>
+     * and the minimum capacity.
+     */
     static bfs_fordfulkerson_data bfs_fordfulkerson(graph::Graph &G, int source, int sink);
 
-    void reset_bfs_nodes();
   };
 
 }  // namespace graph

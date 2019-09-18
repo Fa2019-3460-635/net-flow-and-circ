@@ -2,14 +2,14 @@ set (CMAKE_CXX_STANDARD 11)
 
 set(
   sources
-  edge.cpp
+#  edge.cpp
   graph.cpp
   bfs.cpp
   fordfulkerson.cpp
 )
 set(
   headers
-  edge.hpp
+#  edge.hpp
   graph.hpp
   bfs.hpp
   fordfulkerson.hpp

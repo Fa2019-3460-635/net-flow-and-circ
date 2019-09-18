@@ -23,9 +23,18 @@ namespace graph {
 
   public:
 
+    /**
+     * @brief Default Constructor
+     */
     Graph();
 
+    /**
+     * @brief Constructor for Graph
+     *
+     * @param adjacency_list: a pre-build adjacency list
+     */
     Graph(const std::vector<std::vector<edge>> &adjacency_list);
+
     /**
      * @brief parse() takes in a file stream, whose contents
      * should reflect the construction of a weighted
@@ -47,29 +56,52 @@ namespace graph {
      */
     bool parse(std::istream &input_data);
 
-
     /**
      * @brief Print a plain-text version of the contents of
      * the graph directly to std::cout.
      */
     void print() const;
     
+    /**
+     * @brief Reduce the capacity of the edge between the given nodes
+     * 
+     * @param start_node
+     * @param end_node
+     * @param amount: The amount by which to reduce the capacity of the edge.
+     */
     void reduce_edge_capacity(int start_node, int end_node, int amount);
     
-
+    /**
+     * @brief Increases the capacity of the edge between the given nodes
+     * 
+     * @param start_node
+     * @param end_node
+     * @param amount: The amount by which to increase the capacity of the edge.
+     */
     void increase_edge_capacity(int start_node, int end_node, int amount);
 
-    /* The source will have no edges pointing to it*/
+    /**
+     * @brief The source will have no edges pointing to it
+     * 
+     * This method assumes that the graph contains a single source
+     */
     int find_source();
     
 
-    //sink points to nothing
+    /**
+     * @brief The sink points to nothing
+     * 
+     * This method assumes that the graph contains a single sink
+     */
     int find_sink();
 
-    // this function finds the sum of the capacity leaving a node
+    /**
+     * @brief This function finds the sum of the capacity leaving a node
+     *
+     * @param node: the node in question
+     */
     int total_capacity_out(int node);
     
-
     unsigned long get_number_of_nodes();
 
     std::vector<std::vector<edge>> get_adjacency_list() const;
@@ -93,6 +125,13 @@ namespace graph {
      */
     int get_capacity_of_path(std::vector<int> path);
 
+    /**
+     * @brief Transform the given graph which potentially has multiple sources/sinks to 
+     * one that has a single source/sink.
+     *
+     * @param G: The graph to transform
+     * @return A new graph that has one source and one sink
+     */
     static Graph transform_to_single_source_sink(const graph::Graph& G);
 
     /**

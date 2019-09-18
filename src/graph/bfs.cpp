@@ -100,10 +100,6 @@ graph::Bfs::bfs_fordfulkerson_data graph::Bfs::bfs_fordfulkerson(graph::Graph &G
   return fordfolkerson_data;
 }
 
-void graph::Bfs::reset_bfs_nodes()
-{
-
-}
 void graph::Bfs::bfs_node::reset()
 {
   color = bfs_color::WHITE;
