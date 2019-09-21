@@ -18,7 +18,7 @@ namespace graph {
       int flow = 0;
     };
 
-  private:
+  protected:
     std::vector<std::vector<edge>> m_adjacency_list;
 
   public:
