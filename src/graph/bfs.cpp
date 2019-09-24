@@ -2,6 +2,39 @@
 
 #include <limits>
 
+/**
+ * A data structure for holding intermediate data for the Breadth-First Search.
+ */
+struct bfs_node
+{
+  // TODO: Determine the concept that the following type underlies.
+  enum bfs_color {
+    WHITE,
+    GRAY,
+    BLACK
+  };
+
+  bfs_color color;
+  int distance;
+  std::vector<int> path;
+  int parent;
+  int node_number;
+  int minimum_capacity;
+
+  /**
+   * @brief Reset all the members of the bfs_node struct
+   *        to defaults
+   */
+  void reset()
+  {
+    color = bfs_color::WHITE;
+    node_number = -1;
+    distance = 0;
+    path.clear();
+    parent = 0;
+  }
+};
+
 std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int sink)
 {
   std::vector<bfs_node> bfs_nodes;
@@ -112,15 +145,3 @@ graph::Bfs::bfs_fordfulkerson_data graph::Bfs::bfs_fordfulkerson(graph::Graph &G
   return fordfolkerson_data;
 }
 
-void graph::Bfs::bfs_node::reset()
-{
-  color = bfs_color::WHITE;
-  distance = -1;
-  path.clear();
-  parent = -1;
-  node_number = -1;
-
-  distance = 0;
-  path.clear();
-  parent = 0;
-}

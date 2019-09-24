@@ -11,23 +11,6 @@ namespace graph {
   class Bfs {
   public:
 
-    struct bfs_node {
-      enum bfs_color { WHITE, GRAY, BLACK };
-
-      bfs_color color;
-      int distance;
-      std::vector<int> path;
-      int parent;
-      int node_number;
-      int minimum_capacity;
-
-      /**
-       * @brief Reset all the members of the bfs_node struct
-       * to defaults
-       */
-      void reset();
-    };
-
     struct bfs_fordfulkerson_data
     {
       std::vector<int> path;
