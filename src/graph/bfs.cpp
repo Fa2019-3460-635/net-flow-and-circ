@@ -14,21 +14,14 @@ struct bfs_node
   {}
 
   bfs_node (int node_number)
-  : color(WHITE),
+  : discovered(false),
     distance(0),
     parent(0),
     node_number(node_number),
     minimum_capacity(0)
   {}
 
-  // TODO: Determine the concept that the following type underlies.
-  enum bfs_color {
-    WHITE,
-    GRAY,
-    BLACK
-  };
-
-  bfs_color color;
+  bool discovered;
   int distance;
   std::vector<int> path;
   int parent;
@@ -41,7 +34,7 @@ struct bfs_node
    */
   void reset()
   {
-    color = bfs_color::WHITE;
+    discovered = false;
     node_number = -1;
     distance = 0;
     path.clear();
@@ -57,10 +50,6 @@ std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
   std::vector<bfs_node> bfs_nodes;
   for (int i = 0; i < adjacency_list.size(); ++i)
     bfs_nodes.emplace_back(i);
-
-  // initialize the "source" node
-  bfs_nodes[source].color = bfs_node::bfs_color::GRAY;
-  bfs_nodes[source].distance = 0;
 
   // create a queue of discovered nodes, and initialize with the source node
   std::queue<bfs_node *> node_queue;
@@ -78,9 +67,9 @@ std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
     for (auto & edge : edges)
     {
       auto & dest = bfs_nodes[edge.node];
-      if(dest.color == bfs_node::bfs_color::WHITE)
+      if (!dest.discovered)
       {
-        dest.color = bfs_node::bfs_color::GRAY;
+        dest.discovered = true;
         dest.distance = current_node->distance + 1;
         dest.parent = node_num;
         dest.path = current_node->path;
@@ -113,38 +102,46 @@ Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sin
     bfs_nodes.emplace_back(i);
 
   // initialize the "source" node
-  bfs_nodes[source].color = bfs_node::bfs_color::GRAY;
-  bfs_nodes[source].distance = 0;
   bfs_nodes[source].minimum_capacity = std::numeric_limits<int>::max(); // simulates infinity
 
+  // create a queue of discovered nodes, and initialize with the source node
   std::queue<bfs_node *> node_queue;
   node_queue.push(&bfs_nodes[source]);
 
-  while(node_queue.size() != 0) {
+  while (!node_queue.empty())
+  {
     bfs_node *current_node = node_queue.front();
     node_queue.pop();
-    for(int i = 0; i < adjacency_list[current_node->node_number].size(); ++i) { /* For each adjacent node to the current one*/
-      if(bfs_nodes[adjacency_list[current_node->node_number][i].node].color == bfs_node::bfs_color::WHITE) { /* if the adjacent node hasnt been visited yet (white)*/
-        bfs_node *adjacent_node = &bfs_nodes[adjacency_list[current_node->node_number][i].node];
-        adjacent_node->color = bfs_node::bfs_color::GRAY;/* It has been visisted now*/
-        adjacent_node->distance = current_node->distance + 1;/* The distance to this node is one further than the previous node*/
-        adjacent_node->parent = current_node->node_number;
-        adjacent_node->path = current_node->path;
-        adjacent_node->path.push_back(current_node->node_number);
-        adjacent_node->minimum_capacity = current_node->minimum_capacity;
-        int adjacent_capacity = adjacency_list[current_node->node_number][i].capacity;
 
-        if(adjacent_capacity < adjacent_node->minimum_capacity) {/* Check if new capacity is less than old capacity*/
-          adjacent_node->minimum_capacity = adjacent_capacity;
+    auto & edges = adjacency_list[current_node->node_number];
+
+    // for each node adjacent to current node
+    for(int i = 0; i < edges.size(); ++i)
+    { 
+      // if the adjacent node hasn't been visited yet
+      bfs_node & adjacent_node = bfs_nodes[edges[i].node];
+      if(!adjacent_node.discovered)
+      {
+        //bfs_node *adjacent_node = &bfs_nodes[edges[i].node];
+        adjacent_node.discovered = true;
+        adjacent_node.distance = current_node->distance + 1;/* The distance to this node is one further than the previous node*/
+        adjacent_node.parent = current_node->node_number;
+        adjacent_node.path = current_node->path;
+        adjacent_node.path.push_back(current_node->node_number);
+        adjacent_node.minimum_capacity = current_node->minimum_capacity;
+        int adjacent_capacity = edges[i].capacity;
+
+        if(adjacent_capacity < adjacent_node.minimum_capacity) {/* Check if new capacity is less than old capacity*/
+          adjacent_node.minimum_capacity = adjacent_capacity;
         }
 
-        if(adjacent_node->node_number == sink) {
-          adjacent_node->path.push_back(adjacent_node->node_number);
-          fordfolkerson_data.path = adjacent_node->path;
-          fordfolkerson_data.minimum_capacity = adjacent_node->minimum_capacity;
+        if(adjacent_node.node_number == sink) {
+          adjacent_node.path.push_back(adjacent_node.node_number);
+          fordfolkerson_data.path = adjacent_node.path;
+          fordfolkerson_data.minimum_capacity = adjacent_node.minimum_capacity;
           return fordfolkerson_data;
         }
-        node_queue.push(adjacent_node);
+        node_queue.push(&adjacent_node);
       }
     }
 
