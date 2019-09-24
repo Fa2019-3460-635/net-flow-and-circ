@@ -19,23 +19,33 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
   std::queue<bfs_node *> node_queue;
   node_queue.push(&bfs_nodes[source]);
 
-  while(node_queue.size() != 0) {
+  while(node_queue.size() != 0)
+  {
+    // get current node
     bfs_node *current_node = node_queue.front();
     node_queue.pop();
-    for(int i = 0; i < adjacency_list[current_node->node_number].size(); ++i) {
-      if(bfs_nodes[adjacency_list[current_node->node_number][i].node].color == bfs_node::bfs_color::WHITE) {
-        bfs_node *v = &bfs_nodes[adjacency_list[current_node->node_number][i].node];
-        v->color = bfs_node::bfs_color::GRAY;
-        v->distance = current_node->distance + 1;
-        v->parent = current_node->node_number;
-        v->path = current_node->path;
-        v->path.push_back(current_node->node_number);
-        if(v->node_number == sink) {
-          v->path.push_back(v->node_number);
-          return v->path;
+    int node_num = current_node->node_number;
+    auto & edges = adjacency_list[node_num];
+
+    // iterate through edges connected to current node
+    for (auto & edge : edges)
+    {
+      auto & dest = bfs_nodes[edge.node];
+      if(dest.color == bfs_node::bfs_color::WHITE)
+      {
+        dest.color = bfs_node::bfs_color::GRAY;
+        dest.distance = current_node->distance + 1;
+        dest.parent = node_num;
+        dest.path = current_node->path;
+        dest.path.push_back(node_num);
+        if (dest.node_number == sink)
+        {
+          dest.path.push_back(dest.node_number);
+          return dest.path;
         }
-        node_queue.push(v);
+        node_queue.push(&dest);
       }
+
     }
 
   }
