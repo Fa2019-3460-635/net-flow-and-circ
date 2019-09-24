@@ -9,6 +9,18 @@ namespace graph {
  */
 struct bfs_node
 {
+  bfs_node ()
+  : bfs_node(0)
+  {}
+
+  bfs_node (int node_number)
+  : color(WHITE),
+    distance(0),
+    parent(0),
+    node_number(node_number),
+    minimum_capacity(0)
+  {}
+
   // TODO: Determine the concept that the following type underlies.
   enum bfs_color {
     WHITE,
@@ -39,24 +51,22 @@ struct bfs_node
 
 std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
 {
+  auto adjacency_list = G.get_adjacency_list();
+
+  // create an adjacency list of "bfs_node" instances
   std::vector<bfs_node> bfs_nodes;
-  int number_of_nodes = G.get_number_of_nodes();
-  std::vector<std::vector<Graph::edge>> adjacency_list = G.get_adjacency_list();
+  for (int i = 0; i < adjacency_list.size(); ++i)
+    bfs_nodes.emplace_back(i);
 
-  for(int i = 0; i < number_of_nodes; ++i) {
-    bfs_node new_bfs_node;
-    new_bfs_node.reset();
-    new_bfs_node.node_number = i;
-    bfs_nodes.push_back(new_bfs_node);
-  }
-
+  // initialize the "source" node
   bfs_nodes[source].color = bfs_node::bfs_color::GRAY;
   bfs_nodes[source].distance = 0;
 
+  // create a queue of discovered nodes, and initialize with the source node
   std::queue<bfs_node *> node_queue;
   node_queue.push(&bfs_nodes[source]);
 
-  while(node_queue.size() != 0)
+  while(!node_queue.empty())
   {
     // get current node
     bfs_node *current_node = node_queue.front();
@@ -95,17 +105,14 @@ Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sin
   Bfs::bfs_fordfulkerson_data fordfolkerson_data;
   int minimum_capacity;
 
+  auto adjacency_list = G.get_adjacency_list();
+
+  // create an adjacency list of "bfs_node" instances
   std::vector<bfs_node> bfs_nodes;
-  int number_of_nodes = G.get_number_of_nodes();
-  std::vector<std::vector<Graph::edge>> adjacency_list = G.get_adjacency_list();
+  for (int i = 0; i < adjacency_list.size(); ++i)
+    bfs_nodes.emplace_back(i);
 
-  for(int i = 0; i < number_of_nodes; ++i) {
-    bfs_node new_bfs_node;
-    new_bfs_node.reset();
-    new_bfs_node.node_number = i;
-    bfs_nodes.push_back(new_bfs_node);
-  }
-
+  // initialize the "source" node
   bfs_nodes[source].color = bfs_node::bfs_color::GRAY;
   bfs_nodes[source].distance = 0;
   bfs_nodes[source].minimum_capacity = std::numeric_limits<int>::max(); // simulates infinity
