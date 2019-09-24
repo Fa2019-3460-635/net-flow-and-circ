@@ -1,5 +1,7 @@
 #include "bfs.hpp"
 
+#include <limits>
+
 std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int sink)
 {
   std::vector<bfs_node> bfs_nodes;
@@ -71,7 +73,7 @@ graph::Bfs::bfs_fordfulkerson_data graph::Bfs::bfs_fordfulkerson(graph::Graph &G
 
   bfs_nodes[source].color = bfs_node::bfs_color::GRAY;
   bfs_nodes[source].distance = 0;
-  bfs_nodes[source].minimum_capacity = 1000000; /*TODO: this should be a numeric limit, or something similar*/
+  bfs_nodes[source].minimum_capacity = std::numeric_limits<int>::max(); // simulates infinity
 
   std::queue<bfs_node *> node_queue;
   node_queue.push(&bfs_nodes[source]);
