@@ -2,6 +2,8 @@
 
 #include <limits>
 
+namespace graph {
+
 /**
  * A data structure for holding intermediate data for the Breadth-First Search.
  */
@@ -35,11 +37,11 @@ struct bfs_node
   }
 };
 
-std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int sink)
+std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
 {
   std::vector<bfs_node> bfs_nodes;
   int number_of_nodes = G.get_number_of_nodes();
-  std::vector<std::vector<graph::Graph::edge>> adjacency_list = G.get_adjacency_list();
+  std::vector<std::vector<Graph::edge>> adjacency_list = G.get_adjacency_list();
 
   for(int i = 0; i < number_of_nodes; ++i) {
     bfs_node new_bfs_node;
@@ -88,14 +90,14 @@ std::vector<int> graph::Bfs::bfs_shortest_path(graph::Graph &G, int source, int 
   return empty_vector;
 }
 
-graph::Bfs::bfs_fordfulkerson_data graph::Bfs::bfs_fordfulkerson(graph::Graph &G, int source, int sink)
+Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sink)
 {
-  graph::Bfs::bfs_fordfulkerson_data fordfolkerson_data;
+  Bfs::bfs_fordfulkerson_data fordfolkerson_data;
   int minimum_capacity;
 
   std::vector<bfs_node> bfs_nodes;
   int number_of_nodes = G.get_number_of_nodes();
-  std::vector<std::vector<graph::Graph::edge>> adjacency_list = G.get_adjacency_list();
+  std::vector<std::vector<Graph::edge>> adjacency_list = G.get_adjacency_list();
 
   for(int i = 0; i < number_of_nodes; ++i) {
     bfs_node new_bfs_node;
@@ -145,3 +147,4 @@ graph::Bfs::bfs_fordfulkerson_data graph::Bfs::bfs_fordfulkerson(graph::Graph &G
   return fordfolkerson_data;
 }
 
+} // namespace graph
