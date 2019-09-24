@@ -15,14 +15,12 @@ struct bfs_node
 
   bfs_node (int node_number)
   : discovered(false),
-    parent(0),
     node_number(node_number),
     minimum_capacity(0)
   {}
 
   bool discovered;
   std::vector<int> path;
-  int parent;
   int node_number;
   int minimum_capacity;
 
@@ -35,9 +33,9 @@ struct bfs_node
     discovered = false;
     node_number = -1;
     path.clear();
-    parent = 0;
   }
 };
+
 
 std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
 {
@@ -67,7 +65,6 @@ std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
       if (!dest.discovered)
       {
         dest.discovered = true;
-        dest.parent = node_num;
         dest.path = current_node->path;
         dest.path.push_back(node_num);
         if (dest.node_number == sink)
@@ -119,7 +116,6 @@ Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sin
       if(!adjacent_node.discovered)
       {
         adjacent_node.discovered = true;
-        adjacent_node.parent = current_node->node_number;
         adjacent_node.path = current_node->path;
         adjacent_node.path.push_back(current_node->node_number);
         adjacent_node.minimum_capacity = current_node->minimum_capacity;
