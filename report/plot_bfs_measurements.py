@@ -1,5 +1,6 @@
 import json
 import matplotlib.pyplot as plt
+import matplotlib
 import sys
 
 """
@@ -29,4 +30,13 @@ if __name__ == '__main__':
 
   # plot the data
   plt.plot(x, y, 'o')
+
+  # adjust plot settings
+  plt.title('Performance of Breadth-First Search\n(Note: E = V^2 for all samples)', fontsize='72')
+  plt.xlabel('V + E', fontsize='48')
+  plt.ylabel('Milliseconds', fontsize='48')
+  plt.xticks(fontsize=28)
+  plt.yticks(fontsize=28)
+
+  # display the plot
   plt.show()

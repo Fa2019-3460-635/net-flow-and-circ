@@ -57,11 +57,9 @@ void bfs_measurements (std::ostream & out_stream)
   Tree measurements;
 
   // configure test parameters
-  int const NUM_SAMPLES = 100000;
-  int const MIN_NUM_EDGES = 10;
-  int const MAX_NUM_EDGES = 1000;
-  int const MIN_NUM_VERTICES = 1;
-  int const MAX_NUM_VERTICES = 100;
+  int const NUM_SAMPLES = 1000;
+  int const MIN_NUM_VERTICES = 2;
+  int const MAX_NUM_VERTICES = 1000;
 
   // record number of samples
   measurements.add({"bfs", "num_samples"}, std::to_string(NUM_SAMPLES));
@@ -69,9 +67,11 @@ void bfs_measurements (std::ostream & out_stream)
   // take the measurements
   for (int i = 0; i < NUM_SAMPLES; ++i)
   {
+    std::cout << "Measured sample " << i << " of " << NUM_SAMPLES << '\n';
+
     // Generate a random grapn
     int num_vertices = Random::nonneg_int(MIN_NUM_VERTICES, MAX_NUM_VERTICES);
-    int num_edges = Random::nonneg_int(MAX_NUM_VERTICES, MAX_NUM_EDGES);
+    int num_edges = num_vertices * num_vertices;
     RandomGraph graph (num_vertices, num_edges);
 
     // Generate random source and sink vertices
