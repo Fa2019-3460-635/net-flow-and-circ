@@ -1,9 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <queue>
 
-#include "edge.hpp"
 #include "graph.hpp"
 
 namespace graph {
