@@ -30,14 +30,11 @@ public:
 //==============================================================================
 public:
 
-    /**
-     * @brief Default constructor
-     */
     Graph ()
     : m_adjacency_list() {}
 
     /**
-     * @brief Constructor that accepts a AdjacencyList
+     * @brief Constructor that accepts an AdjacencyList
      *
      * @param adjacency_list: an adjacency list representation of a graph
      */
@@ -54,19 +51,13 @@ public:
      *        given input stream, populating this instance with its nodes and
      *        edges
      *
-     * There is one line in the stream for
-     * each node in the graph. The naming conventions
-     * starts with the first line being node 0. Lines may be blank.
-     * On each line there should be an even number of integers.
-     * The first integer represents which node is being
-     * connected to, the second ineger is the weight of the edge.
+     * There is one line in the stream for each node in the graph. First line
+     * corresponds to node 0, and so on.  Each line comprises an even number
+     * of integers, with the first number in each pair representing the
+     * ending node of an edge and the second number in each pair representing
+     * the weight of the edge.
      *
-     * This functions returns true if it has successfully
-     * parsed the data into 'adjacency_list', and false
-     * if it has encountered something unexpected.
-     *
-     * @param input_data
-     * @return true if the parse was successful, false otherwise.
+     * @return true iff stream was successfully parsed into an adjacency list
      */
     bool parse(std::istream &input_data);
 
@@ -82,14 +73,14 @@ public:
 public:
 
     /**
-     * @return reference to the underlying implementation of this Graph
+     * @return Reference to the underlying implementation of this Graph
      *         data structure. It is an adjacency list in the form of a
      *         2-dimensional vector of Graph::edge instances.
      */
     AdjacencyList & get_adjacency_list();
 
     /**
-     * @return constant reference to the underlying implementation of this
+     * @return Constant reference to the underlying implementation of this
      *         Graph data structure. It is an adjacency list in the form of a
      *         2-dimensional vector of Graph::edge instances.
      */

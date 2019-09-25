@@ -13,22 +13,17 @@ class FlowNetwork : public Graph
 //==============================================================================
 public:
 
-    /**
-     * @brief Default constructor for FlowNetwork
-     */
     FlowNetwork ()
     : Graph()
     {}
 
     /**
-     * @brief Constructor for FlowNetwork
-     *
-     * @param adjacency_list: a pre-build adjacency list
+     * @param adjacency_list: an adjacency list representation of a graph
      */
     FlowNetwork (Graph::AdjacencyList const & adj_list)
     : Graph(adj_list)
     {
-      // populate the flow mapping with 0 for initial flow
+      // initialize flow along all edges to 0
       for (auto const & node : adj_list)
         for (auto const & edge : node)
           m_flow[edge] = 0;
@@ -40,7 +35,6 @@ public:
 public:
 
     /**
-     * @brief Get redidual graph by 
      * @brief Get the residual graph based on the original graph, the augmenting path, and
      *        the increased flow along the path
 

@@ -9,10 +9,7 @@ namespace graph {
   public:
 
     /**
-     * @brief Find the max flow of the given graph, G
-     *
-     * @param G: The graph in question
-     * @return The maximum flow of the give graph.
+     * @return Max flow of the given flow network
      */
   	static int max_flow (FlowNetwork & G);
 
