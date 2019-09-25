@@ -1,6 +1,9 @@
 #include "bfs.hpp"
 
+#include <algorithm>
 #include <limits>
+#include <vector>
+#include <queue>
 
 namespace graph {
 
@@ -36,50 +39,53 @@ struct bfs_node
   }
 };
 
-
-std::vector<int> Bfs::bfs_shortest_path(Graph &G, int source, int sink)
+std::vector<int> Bfs::bfs_shortest_path(Graph & graph, int source, int sink)
 {
-  auto adjacency_list = G.get_adjacency_list();
+  auto adjacency_list = graph.get_adjacency_list();
 
-  // create an adjacency list of "bfs_node" instances
-  std::vector<bfs_node> bfs_nodes;
-  for (int i = 0; i < adjacency_list.size(); ++i)
-    bfs_nodes.emplace_back(i);
+  std::vector<bool> discovered (adjacency_list.size(), false);
+  std::vector<int> previous_node (adjacency_list.size(), -1);
+  std::queue<int> node_queue;
 
-  // create a queue of discovered nodes, and initialize with the source node
-  std::queue<bfs_node *> node_queue;
-  node_queue.push(&bfs_nodes[source]);
-
-  while(!node_queue.empty())
+  discovered.at(source) = true;
+  node_queue.push(source);
+  while (!node_queue.empty())
   {
-    // get current node
-    bfs_node *current_node = node_queue.front();
+    int current = node_queue.front();
     node_queue.pop();
-    int node_num = current_node->node_number;
-    auto & edges = adjacency_list[node_num];
 
-    // iterate through edges connected to current node
-    for (auto & edge : edges)
+    // detect whether or not we have reached the sink node
+    if (current == sink)
+      break;
+
+    // enqueue any neighbors that have not yet been discovered
+    for (auto const & edge : adjacency_list.at(current))
     {
-      auto & dest = bfs_nodes[edge.node];
-      if (!dest.discovered)
-      {
-        dest.discovered = true;
-        dest.path = current_node->path;
-        dest.path.push_back(node_num);
-        if (dest.node_number == sink)
-        {
-          dest.path.push_back(dest.node_number);
-          return dest.path;
-        }
-        node_queue.push(&dest);
-      }
+      int dest = edge.node;
+      if (discovered.at(dest))
+        continue;
 
+      // cache the previous node
+      previous_node.at(dest) = current;
+
+      // mark next node as discovered
+      discovered.at(dest) = true;
+
+      // add the neighbor to the queue
+      node_queue.push(dest);
     }
-
   }
-  std::vector<int> empty_vector;
-  return empty_vector;
+
+  // return empty path if sink was not reachable
+  if (!discovered.at(sink))
+    return {};
+
+  // reconstruct the path
+  std::vector<int> path;
+  for (int i = sink; i != -1; i = previous_node.at(i))
+      path.push_back(i);
+  std::reverse(std::begin(path), std::end(path));
+  return path;
 }
 
 Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sink)
