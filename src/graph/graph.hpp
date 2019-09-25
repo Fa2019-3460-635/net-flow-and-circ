@@ -1,61 +1,103 @@
 #pragma once
 
-#include <vector>
-#include <fstream>
-#include <stdlib.h>
 #include <iostream>
-
-#include "edge.hpp"
+#include <stdlib.h>
+#include <vector>
 
 namespace graph {
 
-  class Graph {
+class Graph
+{
+//==============================================================================
+// Nested Types
+//==============================================================================
+public:
 
-  public:
-    struct edge {
+    struct edge
+    {
       int node;
-      int capacity;
+      int weight;
     };
 
-  private:
-    std::vector<std::vector<edge>> m_adjacency_list;
+//==============================================================================
+// Public Types
+//==============================================================================
 
-  public:
+    using AdjacencyList = std::vector<std::vector<edge>>;
 
-    Graph();
+//==============================================================================
+// Constructors
+//==============================================================================
+public:
 
-    Graph(const std::vector<std::vector<edge>>& adjacency_list);
+    Graph ()
+    : m_adjacency_list() {}
+
     /**
-     * @brief parse() takes in a file stream, whose contents
-     * should reflect the construction of a weighted
-     * directed graph and instantiates the members of the graph.
+     * @brief Constructor that accepts an AdjacencyList
      *
-     * There is one line in the stream for
-     * each node in the graph. The naming conventions
-     * starts with the first line being node 0. Lines may be blank.
-     * On each line there should be an even number of integers.
-     * The first integer represents which node is being
-     * connected to, the second ineger is the capacity of the edge.
+     * @param adjacency_list: an adjacency list representation of a graph
+     */
+    Graph (const AdjacencyList & adjacency_list)
+    : m_adjacency_list(adjacency_list) {}
+
+//==============================================================================
+// Public Methods
+//==============================================================================
+public:
+
+    /**
+     * @brief Parses the definition of a weighted, directed graph from the
+     *        given input stream, populating this instance with its nodes and
+     *        edges
      *
-     * This functions returns true if it has successfully
-     * parsed the data into 'adjacency_list', and false
-     * if it has encountered something unexpected.
+     * There is one line in the stream for each node in the graph. First line
+     * corresponds to node 0, and so on.  Each line comprises an even number
+     * of integers, with the first number in each pair representing the
+     * ending node of an edge and the second number in each pair representing
+     * the weight of the edge.
      *
-     * @param input_data
-     * @return true if the parse was successful, false otherwise.
+     * @return true iff stream was successfully parsed into an adjacency list
      */
     bool parse(std::istream &input_data);
 
-
     /**
-     * @brief Print a plain-text version of the contents of
-     * the graph directly to std::cout.
+     * @brief Print a plain-text version of the contents of the graph directly
+     *        to STDOUT
      */
     void print() const;
 
+//==============================================================================
+// Accessors
+//==============================================================================
+public:
 
+    /**
+     * @return Reference to the underlying implementation of this Graph
+     *         data structure. It is an adjacency list in the form of a
+     *         2-dimensional vector of Graph::edge instances.
+     */
+    AdjacencyList & get_adjacency_list();
+
+    /**
+     * @return Constant reference to the underlying implementation of this
+     *         Graph data structure. It is an adjacency list in the form of a
+     *         2-dimensional vector of Graph::edge instances.
+     */
+    AdjacencyList const & get_adjacency_list() const;
+
+    /**
+     * @return Number of vertices in the graph
+     */
     unsigned long get_number_of_nodes();
 
-    std::vector<std::vector<edge>> get_adjacency_list() const;
-  };
-}  // namespace graph
+//==============================================================================
+// Private Attributes
+//==============================================================================
+private:
+
+    AdjacencyList m_adjacency_list;
+
+};
+
+} // namespace graph

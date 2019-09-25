@@ -20,17 +20,17 @@ TEST(Graph, ParseTestFromProjectDefinition)
    auto adjacency_list = G->get_adjacency_list();
 
    EXPECT_EQ(adjacency_list[0][0].node, 1);
-   EXPECT_EQ(adjacency_list[0][0].capacity, 3);
+   EXPECT_EQ(adjacency_list[0][0].weight, 3);
    EXPECT_EQ(adjacency_list[0][1].node, 2);
-   EXPECT_EQ(adjacency_list[0][1].capacity, 6);
+   EXPECT_EQ(adjacency_list[0][1].weight, 6);
    EXPECT_EQ(adjacency_list[0][2].node, 3);
-   EXPECT_EQ(adjacency_list[0][2].capacity, 8);
+   EXPECT_EQ(adjacency_list[0][2].weight, 8);
 
    EXPECT_EQ(adjacency_list[1][0].node, 2);
-   EXPECT_EQ(adjacency_list[1][0].capacity, 2);
+   EXPECT_EQ(adjacency_list[1][0].weight, 2);
 
    EXPECT_EQ(adjacency_list[2][0].node, 3);
-   EXPECT_EQ(adjacency_list[2][0].capacity, 1);
+   EXPECT_EQ(adjacency_list[2][0].weight, 1);
 
 }
 
@@ -52,16 +52,16 @@ TEST(Graph, ParseTestBlankLines)
    auto adjacency_list = G->get_adjacency_list();
 
    EXPECT_EQ(adjacency_list[0][0].node, 1);
-   EXPECT_EQ(adjacency_list[0][0].capacity, 3);
+   EXPECT_EQ(adjacency_list[0][0].weight, 3);
    EXPECT_EQ(adjacency_list[0][1].node, 2);
-   EXPECT_EQ(adjacency_list[0][1].capacity, 6);
+   EXPECT_EQ(adjacency_list[0][1].weight, 6);
    EXPECT_EQ(adjacency_list[0][2].node, 3);
-   EXPECT_EQ(adjacency_list[0][2].capacity, 8);
+   EXPECT_EQ(adjacency_list[0][2].weight, 8);
 
    EXPECT_EQ(adjacency_list[2][0].node, 2);
-   EXPECT_EQ(adjacency_list[2][0].capacity, 2);
+   EXPECT_EQ(adjacency_list[2][0].weight, 2);
 
    EXPECT_EQ(adjacency_list[3][0].node, 3);
-   EXPECT_EQ(adjacency_list[3][0].capacity, 1);
+   EXPECT_EQ(adjacency_list[3][0].weight, 1);
 
 }
