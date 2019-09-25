@@ -50,7 +50,7 @@ public:
 
      * @return Gf, the residual graph.
      */
-    static Graph get_residual_graph(const Graph& G, std::vector<int> p, int f);
+    static FlowNetwork get_residual_graph (const FlowNetwork & G, std::vector<int> p, int f);
 
 //==============================================================================
 // Public Methods

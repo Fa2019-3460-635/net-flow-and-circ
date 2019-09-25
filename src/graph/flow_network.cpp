@@ -8,36 +8,36 @@ namespace graph {
 // Static Utility Methods
 //==============================================================================
 
-Graph FlowNetwork::get_residual_graph(const Graph &G, std::vector<int> p, int f)
+FlowNetwork FlowNetwork::get_residual_graph
+(const FlowNetwork & G, std::vector<int> augmenting_path, int flow_on_path)
 {
-    Graph Gf = G;
+    // copy the original graph
+    FlowNetwork residual_graph = G;
 
-    AdjacencyList & adj = Gf.get_adjacency_list();
+    // extract the underlying adjacency list representation
+    AdjacencyList & adj = residual_graph.get_adjacency_list();
 
-    //for each node in p contained in G
-    for(int i = 0; i < p.size() - 1; i++)
+    for(int i = 0; i < augmenting_path.size() - 1; i++)
     {
         // add an edge going from p[i + 1] to p[i] with a capacity of f
-        Graph::edge new_edge;
-        new_edge.node = p.at(i);
-        new_edge.weight = f;
-        adj.at(p.at(i+1)).push_back(new_edge);
+        Graph::edge reverse_edge;
+        reverse_edge.node = augmenting_path.at(i);
+        reverse_edge.weight = flow_on_path;
+        adj.at(augmenting_path.at(i + 1)).push_back(reverse_edge);
 
-        for(int j = 0; j < adj.at(p.at(i)).size(); j++)
+        // subtract the flow along the path from the capacity of original
+        // flow network in order to obtain residual graph
+        for (auto & e : adj.at(augmenting_path.at(i)))
         {
-            if (adj[p.at(i)][j].node == p[i+1])
-            {
-                // subtract f from the capacity of the edge from p[i] to p[i + 1]
-                adj[p[i]][j].weight -= f;
-
-                // add f to the flow of the edge from p[i] to p[i+1]
-                adj[p[i]][j].flow += f;
-                break;
-            }
+          if (e.node == augmenting_path.at(i + 1))
+          {
+            e.weight -= flow_on_path;
+            residual_graph.m_flow[e] += flow_on_path;
+          }
         }
     }
 
-    return Gf;
+    return residual_graph;
 }
 
 //==============================================================================
@@ -56,24 +56,24 @@ int FlowNetwork::total_capacity_out(int node)
 
 int FlowNetwork::find_source()
 {
-  std::vector<bool> points_to;
+    std::vector<bool> points_to;
 
-  for(int i = 0; i < get_adjacency_list().size(); i++) {
-    points_to.push_back(false); /* Start with nothing being pointed to*/
-  }
-
-  for(int x = 0; x < get_adjacency_list().size(); x++) {
-    for(int y = 0; y < get_adjacency_list()[x].size(); y++) {
-      points_to[get_adjacency_list()[x][y].node] = true;
+    for(int i = 0; i < get_adjacency_list().size(); i++) {
+      points_to.push_back(false); /* Start with nothing being pointed to*/
     }
-  }
 
-  for(int i = 0; i < points_to.size(); i++) {
-    if(points_to[i] == false) {
-      return i;
+    for(int x = 0; x < get_adjacency_list().size(); x++) {
+      for(int y = 0; y < get_adjacency_list()[x].size(); y++) {
+        points_to[get_adjacency_list()[x][y].node] = true;
+      }
     }
-  }
-  return -1; //fail
+
+    for(int i = 0; i < points_to.size(); i++) {
+      if(points_to[i] == false) {
+        return i;
+      }
+    }
+    return -1; //fail
 }
 
 int FlowNetwork::find_sink()
