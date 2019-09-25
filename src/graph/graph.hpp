@@ -91,6 +91,11 @@ public:
      */
     unsigned long get_number_of_nodes();
 
+    /**
+     * @return Returns the notal number of edges in the graph
+     */
+    unsigned long get_number_of_edges();
+  
 //==============================================================================
 // Private Attributes
 //==============================================================================

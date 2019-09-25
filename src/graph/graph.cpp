@@ -66,6 +66,14 @@ Graph::AdjacencyList & Graph::get_adjacency_list()
     return m_adjacency_list;
 }
 
+unsigned long graph::Graph::get_number_of_edges()
+{
+  unsigned long num_edges = 0;
+  for (auto const & node : m_adjacency_list)
+    num_edges += node.size();
+  return num_edges;
+}
+
 Graph::AdjacencyList const & Graph::get_adjacency_list() const
 {
     return m_adjacency_list;
