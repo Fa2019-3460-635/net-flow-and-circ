@@ -32,7 +32,7 @@ namespace {
       // add the edge to the graph
       graph::Graph::edge e;
       e.node = end_vertex;
-      e.capacity = weight;
+      e.weight = weight;
       adjacency_list.at(start_vertex).emplace_back(std::move(e));
     }
 

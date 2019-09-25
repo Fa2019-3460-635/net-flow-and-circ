@@ -3,7 +3,6 @@ set(sources
 )
 
 set(headers
-  edge_tests.hpp
   graph_tests.hpp
   bfs_tests.hpp
   fordfulkerson_tests.hpp
