@@ -1,28 +1,13 @@
 #pragma once
 
 #include <vector>
-#include <queue>
 
-#include "edge.hpp"
-#include "graph.hpp"
+#include "flow_network.hpp"
 
 namespace graph {
 
-  class Bfs {
-  public:
-
-    struct bfs_node {
-      enum bfs_color { WHITE, GRAY, BLACK };
-
-      bfs_color color;
-      int distance;
-      std::vector<int> path;
-      int parent;
-      int node_number;
-
-      void reset();
-    };
-
+  class Bfs
+  {
   public:
 
     /**
@@ -39,7 +24,6 @@ namespace graph {
      */
     static std::vector<int> bfs_shortest_path(graph::Graph &G, int source, int sink);
 
-    void reset_bfs_nodes();
   };
 
 }  // namespace graph

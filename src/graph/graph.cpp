@@ -1,25 +1,20 @@
 #include "graph.hpp"
+
+#include <algorithm>
 #include <sstream>
 
+namespace graph {
 
-graph::Graph::Graph()
-    : m_adjacency_list()
+//==============================================================================
+// Public Methods
+//==============================================================================
+
+bool Graph::parse (std::istream &input_data)
 {
+    m_adjacency_list.clear(); // clear the previous graph
+    std::string input; // input will hold each line, one at a time
 
-}
-
-graph::Graph::Graph(const std::vector<std::vector<graph::Graph::edge> > &adjacency_list)
-    : m_adjacency_list(adjacency_list)
-{
-
-}
-
-bool graph::Graph::parse(std::istream &input_data)
-{
-      m_adjacency_list.clear(); // clear the previous graph
-      std::string input; // input will hold each line, one at a time
-
-      while (std::getline(input_data, input)) {
+    while (std::getline(input_data, input)) {
         std::vector<edge> node_edges;
         std::vector<int> int_list; // int_list will hold the list of integers in a single line
 
@@ -37,39 +32,38 @@ bool graph::Graph::parse(std::istream &input_data)
             }
         }
 
-        if (added < 2)
-        {
-            int_list.push_back(-1);
-            int_list.push_back(-1);
-        }
-
         for (unsigned int i = 0; i < int_list.size(); i += 2) {
-          edge new_edge;
-          new_edge.node = int_list[i];
-          new_edge.capacity = int_list[i+1];
-          node_edges.push_back(new_edge);
+            edge new_edge;
+            new_edge.node = int_list[i];
+            new_edge.weight = int_list[i+1];
+            node_edges.push_back(new_edge);
         }
 
         m_adjacency_list.push_back(node_edges); // after node_edges has been filled
-      }
-      return true;
+    }
+    return true;
 }
 
-void graph::Graph::print() const
+void Graph::print() const
 {
-      for(unsigned int x = 0; x < m_adjacency_list.size(); ++x)
-      {
+    for(unsigned int x = 0; x < m_adjacency_list.size(); ++x)
+    {
         std::cout << "Node " << x << " is connected to nodes:\n";
-        for(unsigned int y = 0; y< m_adjacency_list[x].size();++y)
+        for(unsigned int y = 0; y < m_adjacency_list[x].size();++y)
         {
-          std::cout << m_adjacency_list[x][y].node << " with a capacity of " << m_adjacency_list[x][y].capacity << std::endl;
+            std::cout << m_adjacency_list[x][y].node << " with a capacity of " << m_adjacency_list[x][y].weight << std::endl;
         }
-      }
+    }
 }
 
-unsigned long graph::Graph::get_number_of_nodes()
+
+//==============================================================================
+// Accessors
+//==============================================================================
+
+Graph::AdjacencyList & Graph::get_adjacency_list()
 {
-    return m_adjacency_list.size();
+    return m_adjacency_list;
 }
 
 unsigned long graph::Graph::get_number_of_edges()
@@ -80,7 +74,14 @@ unsigned long graph::Graph::get_number_of_edges()
   return num_edges;
 }
 
-std::vector<std::vector<graph::Graph::edge> > graph::Graph::get_adjacency_list() const{
+Graph::AdjacencyList const & Graph::get_adjacency_list() const
+{
     return m_adjacency_list;
 }
 
+unsigned long Graph::get_number_of_nodes()
+{
+    return m_adjacency_list.size();
+}
+
+} // namespace graph

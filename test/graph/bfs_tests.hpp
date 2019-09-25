@@ -32,3 +32,66 @@ TEST(Bfs, ShortestPathTest001)
     EXPECT_EQ(shortest_path[3], 5);
 
 }
+
+/**
+ * Verify that BFS returns empty path vector if there is no path.
+ */
+TEST (Bfs, ShortestPathTest002)
+{
+    std::istringstream input (
+        "1 10 2 20\n"
+        "\n"
+        "\n"
+        "2 10"
+    );
+    graph::Graph g;
+    g.parse(input);
+
+    auto shortest_path = graph::Bfs::bfs_shortest_path(g, 0, 3);
+    EXPECT_EQ(0, shortest_path.size());
+}
+
+/**
+ * Verify that shortest path has correct size.
+ */
+TEST (Bfs, ShortestPathTest003)
+{
+    std::istringstream input (
+        "1 4 2 2\n"
+        "2 3 3 2 4 3\n"
+        "1 1 3 4 4 5\n"
+        "\n"
+        "3 1"
+    );
+    graph::Graph g;
+    g.parse(input);
+
+    auto shortest_path = graph::Bfs::bfs_shortest_path(g, 0, 4);
+    EXPECT_EQ(3, shortest_path.size());
+}
+
+/**
+ * Verify that correct shortest path is returned.
+ */
+TEST (Bfs, ShortestPathTest004)
+{
+    std::istringstream input (
+        "\n"
+        "2 40 3 8 4 10\n"
+        "5 6 7 10\n"
+        "2 4 4 12 6 2\n"
+        "6 1\n"
+        "3 2 6 2 7 4\n"
+        "8 4 9 3\n"
+        "8 20 10 1\n"
+        "5 0 10 20\n"
+        "4 6 8 10 10 2\n"
+        ""
+    );
+    graph::Graph g;
+    g.parse(input);   
+
+    auto shortest_path = graph::Bfs::bfs_shortest_path(g, 1, 5);
+    std::vector<int> expected {1, 2, 5};
+    EXPECT_EQ(expected, shortest_path);
+}
