@@ -83,7 +83,7 @@ std::vector<int> Bfs::bfs_shortest_path(Graph & graph, int source, int sink)
   return path;
 }
 
-Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sink)
+Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(FlowNetwork &G, int source, int sink)
 {
   Bfs::bfs_fordfulkerson_data fordfolkerson_data;
   int minimum_capacity;
@@ -120,7 +120,7 @@ Bfs::bfs_fordfulkerson_data Bfs::bfs_fordfulkerson(Graph &G, int source, int sin
         adjacent_node.path = current_node->path;
         adjacent_node.path.push_back(current_node->node_number);
         adjacent_node.minimum_capacity = current_node->minimum_capacity;
-        int adjacent_capacity = edges[i].capacity;
+        int adjacent_capacity = edges[i].weight;
 
         if(adjacent_capacity < adjacent_node.minimum_capacity) {/* Check if new capacity is less than old capacity*/
           adjacent_node.minimum_capacity = adjacent_capacity;

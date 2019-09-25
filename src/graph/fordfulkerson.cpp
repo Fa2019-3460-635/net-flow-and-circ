@@ -1,8 +1,7 @@
 #include "fordfulkerson.hpp"
-#include "graph.hpp"
 #include "bfs.hpp"
 
-int graph::FordFulkerson::max_flow(graph::Graph &G)
+int graph::FordFulkerson::max_flow(graph::FlowNetwork &G)
 {
   int source = G.find_source();
   int sink = G.find_sink();

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "graph.hpp"
+#include "flow_network.hpp"
 
 namespace graph {
 
@@ -40,7 +41,7 @@ namespace graph {
      * @return A struct with the shortest path from source to sink represented as a std::vector<int>
      * and the minimum capacity.
      */
-    static bfs_fordfulkerson_data bfs_fordfulkerson(graph::Graph &G, int source, int sink);
+    static bfs_fordfulkerson_data bfs_fordfulkerson(graph::FlowNetwork &G, int source, int sink);
 
   };
 
