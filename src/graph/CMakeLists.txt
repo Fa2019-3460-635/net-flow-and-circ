@@ -2,17 +2,17 @@ set (CMAKE_CXX_STANDARD 11)
 
 set(
   sources
-#  edge.cpp
   graph.cpp
   bfs.cpp
   fordfulkerson.cpp
+  flow_network.cpp
 )
 set(
   headers
-#  edge.hpp
   graph.hpp
   bfs.hpp
   fordfulkerson.hpp
+  flow_network.hpp
 )
 
 add_library(graph

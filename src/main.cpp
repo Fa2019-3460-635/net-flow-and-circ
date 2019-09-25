@@ -1,12 +1,13 @@
-#include <unistd.h>
+#include <fstream>
 #include <getopt.h>
 #include <iostream>
 #include <string>
-#include <program_options.hpp>
-#include <graph.hpp>
-#include <bfs.hpp>
-#include <fordfulkerson.hpp>
-#include <fstream>
+#include <unistd.h>
+
+#include "program_options.hpp"
+#include "flow_network.hpp"
+#include "bfs.hpp"
+#include "fordfulkerson.hpp"
 
 int main(int argc, char **argv)
 {
@@ -48,10 +49,10 @@ int main(int argc, char **argv)
       break;
     case ProgramOptions::AlgorithmSelection::FORD_FULKERSON:
       if(in_file.is_open()) {
-        graph::Graph main_graph;
+        graph::FlowNetwork main_graph;
         if(main_graph.parse(in_file)) {
           // Ensure that the graph has a single source and sink
-          main_graph = graph::Graph::transform_to_single_source_sink(main_graph);
+          main_graph = graph::FlowNetwork::transform_to_single_source_sink(main_graph);
           // get the maximum flow through that network
           std::cout << "The maximum flow is " << graph::FordFulkerson::max_flow(main_graph) << std::endl;
         }

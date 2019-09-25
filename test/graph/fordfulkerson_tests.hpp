@@ -1,7 +1,7 @@
 #pragma once
 #include "gtest/gtest.h"
 
-#include "graph.hpp"
+#include "flow_network.hpp"
 #include "bfs.hpp"
 #include "fordfulkerson.hpp"
 
@@ -18,7 +18,7 @@ TEST(FordFulkerson, MaxFlow001)
         {}//7
     };
 
-    auto G = graph::Graph(list);
+    graph::FlowNetwork G (list);
     int max_flow = graph::FordFulkerson::max_flow(G);
 
     EXPECT_EQ(max_flow, 28);
