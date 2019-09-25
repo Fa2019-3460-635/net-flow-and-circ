@@ -6,6 +6,7 @@ set(
   graph.cpp
   bfs.cpp
   fordfulkerson.cpp
+  circulationgraph.cpp
 )
 set(
   headers
@@ -13,6 +14,7 @@ set(
   graph.hpp
   bfs.hpp
   fordfulkerson.hpp
+  circulationgraph.hpp
 )
 
 add_library(graph

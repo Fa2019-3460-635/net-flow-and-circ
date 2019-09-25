@@ -1,11 +1,14 @@
 #pragma once
 
 #include "graph.hpp"
+#include <vector>
+#include <istream>
 
 namespace graph
 {
     class CirculationGraph : public Graph
     {
+    public:
         /**
          * @brief Default constructor
          */
@@ -29,7 +32,7 @@ namespace graph
          * @param input_data
          * @return true if the parse was successful, flase otherwise.
          */
-        bool parse(std::istream &input_data) override;
+        bool parse(std::istream &input_data);
         
         /**
          * @brief return the CirculationGraph as a Graph
@@ -42,9 +45,10 @@ namespace graph
          * @brief Returns the net circulation in the network
          * @return total supply - total demand
          */
-        int getNetCirculation();
+        int getNetSupply();
 
+    private:
         int m_total_supply;
         int m_total_demand;
-    }
+    };
 }
