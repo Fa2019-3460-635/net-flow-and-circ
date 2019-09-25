@@ -89,26 +89,6 @@ int FlowNetwork::find_sink()
   return -1; //fail
 }
 
-int FlowNetwork::get_capacity_of_path(std::vector<int> path)
-{
-   int min_capacity = std::numeric_limits<int>::max();
-   for(unsigned int i = 0; i < path.size() - 1; i++)
-   {
-       int capacity = 0;
-       for(const auto& edge: get_adjacency_list()[path[i]])
-       {
-           if(edge.node == path[i + 1])
-           {
-               capacity = edge.weight;
-               break;
-           }
-       }
-       min_capacity = std::min(min_capacity, capacity);
-   }
-
-   return min_capacity;
-}
-
 void FlowNetwork::reduce_edge_capacity (int start_node, int end_node, int amount)
 {
   auto & graph = get_adjacency_list();

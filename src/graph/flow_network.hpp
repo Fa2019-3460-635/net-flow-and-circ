@@ -73,13 +73,6 @@ public:
     int find_sink();
 
     /**
-     * @brief get_capacity_of_path
-     * @param path: The path to traverse
-     * @return the capacity of the given path
-     */
-    int get_capacity_of_path(std::vector<int> path);
-
-    /**
      * @brief Reduce the capacity of the edge between the given nodes
      * 
      * @param start_node

@@ -23,8 +23,7 @@ get_path (FlowNetwork & G, int source, int sink)
     int node = path.at(i);
     for (auto const & edge : adj_list.at(node))
       if (edge.node == path.at(i + 1))
-        if (minimum_capacity > edge.weight)
-          minimum_capacity = edge.weight;
+        minimum_capacity = std::min(minimum_capacity, edge.weight);
   }
 
   return {path, minimum_capacity};
