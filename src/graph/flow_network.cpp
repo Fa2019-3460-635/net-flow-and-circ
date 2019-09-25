@@ -13,7 +13,7 @@ Graph FlowNetwork::get_residual_graph(const Graph &G, std::vector<int> p, int f)
     Graph Gf = G;
 
     AdjacencyList & adj = Gf.get_adjacency_list();
-    
+
     //for each node in p contained in G
     for(int i = 0; i < p.size() - 1; i++)
     {

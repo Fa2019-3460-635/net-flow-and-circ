@@ -2,20 +2,12 @@
 
 #include "graph.hpp"
 
+#include <map>
+
 namespace graph {
 
 class FlowNetwork : public Graph
 {
-//==============================================================================
-// Nested Types
-//==============================================================================
-public:
-
-  struct flow_edge
-  {
-    int flow = 0;
-  };
-
 //==============================================================================
 // Constructors
 //==============================================================================
@@ -25,15 +17,22 @@ public:
      * @brief Default constructor for FlowNetwork
      */
     FlowNetwork ()
-    : Graph() {}
+    : Graph()
+    {}
 
     /**
      * @brief Constructor for FlowNetwork
      *
      * @param adjacency_list: a pre-build adjacency list
      */
-    FlowNetwork (std::vector<std::vector<Graph::edge>> const & adj_list)
-    : Graph(adj_list) {}
+    FlowNetwork (Graph::AdjacencyList const & adj_list)
+    : Graph(adj_list)
+    {
+      // populate the flow mapping with 0 for initial flow
+      for (auto const & node : adj_list)
+        for (auto const & edge : node)
+          m_flow[edge] = 0;
+    }
 
 //==============================================================================
 // Static Utility Methods
@@ -126,12 +125,30 @@ public:
     std::vector<int> get_sinks ();
 
 //==============================================================================
+// Implementation Details
+//==============================================================================
+private:
+
+    /**
+     * Comparator functor so that we can use Graph::edge instances as keys
+     * in an associative array that maps edges to their flows.
+     */
+    struct EdgeComparator
+    {
+      bool operator () (Graph::edge const & e1, Graph::edge const & e2) const
+      {
+        return &e1 < &e2;
+      }
+    };
+
+//==============================================================================
 // Private Attributes
 //==============================================================================
 private:
 
     std::vector<int> m_sources;
     std::vector<int> m_sinks;
+    std::map<Graph::edge, int, EdgeComparator> m_flow;
 
 };
 
