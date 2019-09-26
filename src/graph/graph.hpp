@@ -97,9 +97,9 @@ public:
     unsigned long get_number_of_edges();
   
 //==============================================================================
-// Private Attributes
+// Protected Attributes
 //==============================================================================
-private:
+protected:
 
     AdjacencyList m_adjacency_list;
 
