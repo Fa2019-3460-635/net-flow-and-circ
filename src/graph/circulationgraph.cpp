@@ -3,12 +3,31 @@
 #include <algorithm>
 
 graph::CirculationGraph::CirculationGraph()
-    : graph::Graph()
+    : graph::FlowNetwork()
 {}
 
 graph::CirculationGraph::CirculationGraph(const std::vector<std::vector<graph::Graph::edge>> &adjacency_list)
-    : graph::Graph(adjacency_list)
-{}
+    : graph::FlowNetwork(adjacency_list)
+{
+    m_total_supply = 0;
+    m_total_demand = 0;
+
+    for(const auto &node: m_adjacency_list[0])
+    {
+        m_total_supply += node.weight;
+    }
+
+    for(const auto& list: m_adjacency_list)
+    {
+        for(const auto &node: list)
+        {
+            if(node.node == 1)
+            {
+                m_total_demand += node.weight;
+            }
+        }
+    }
+}
 
 bool graph::CirculationGraph::parse(std::istream &input_data)
 {
@@ -76,12 +95,22 @@ bool graph::CirculationGraph::parse(std::istream &input_data)
 
 }
 
-graph::Graph graph::CirculationGraph::asGraph()
+graph::FlowNetwork graph::CirculationGraph::asFlowNetwork()
 {
-    return Graph(m_adjacency_list);
+    return FlowNetwork(m_adjacency_list);
 }
 
 int graph::CirculationGraph::getNetSupply()
 {
     return m_total_supply - m_total_demand;
+}
+
+int graph::CirculationGraph::total_supply()
+{
+    return m_total_supply;
+}
+
+int graph::CirculationGraph::total_demand()
+{
+   return m_total_demand;
 }

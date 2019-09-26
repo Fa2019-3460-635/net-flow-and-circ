@@ -3,10 +3,11 @@
 #include "graph.hpp"
 #include <vector>
 #include <istream>
+#include "flow_network.hpp"
 
 namespace graph
 {
-    class CirculationGraph : public Graph
+    class CirculationGraph : public FlowNetwork
     {
     public:
         /**
@@ -39,13 +40,25 @@ namespace graph
          * 
          * @return The graph version of the CirculationGraph
          */
-        Graph asGraph();
+        graph::FlowNetwork asFlowNetwork();
 
         /**
          * @brief Returns the net circulation in the network
          * @return total supply - total demand
          */
         int getNetSupply();
+
+        /**
+         * @brief total_supply
+         * @return
+         */
+        int total_supply();
+
+        /**
+         * @brief total_demand
+         * @return
+         */
+        int total_demand();
 
     private:
         int m_total_supply;
