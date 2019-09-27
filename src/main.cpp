@@ -8,6 +8,8 @@
 #include "flow_network.hpp"
 #include "bfs.hpp"
 #include "fordfulkerson.hpp"
+#include "circulationgraph.hpp"
+#include "circulation.hpp"
 
 int main(int argc, char **argv)
 {
@@ -62,6 +64,33 @@ int main(int argc, char **argv)
       }
       in_file.close();
       break;
+    case ProgramOptions::AlgorithmSelection::CIRCULATION:
+        if(in_file.is_open()) {
+            graph::CirculationGraph circ_graph;
+            if(circ_graph.parse(in_file)) {
+                graph::CirculationResult circ_result =
+                        graph::Circulation::has_circulation(circ_graph);
+
+                switch(circ_result)
+                {
+                case graph::CirculationResult::HAS_CIRCULATION:
+                    std::cout << "Supplied graph contained circulation." << std::endl;
+                    break;
+                case graph::CirculationResult::SUPPLY_NEQ_DEMAND:
+                    std::cout << "Supplied graph did NOT have circulation." << std::endl;
+                    std::cout << "Reason: Supply did not equal demand." << std::endl;
+                    break;
+                case graph::CirculationResult::MIN_CUT_NEQ_SUPPLY:
+                    std::cout << "Supplied graph did NOT have circulation." << std::endl;
+                    std::cout << "Reason: The Min-Cut/Max-Flow did not equal supply/demand." << std::endl;
+                    break;
+                default:
+                    std::cout << "An error occurred in processing the supplied graph." << std::endl;
+                    ProgramOptions::print_help();
+                }
+            }
+        }
+        break;
     }
   }
   catch (const std::string &error_text) { // if the user mis-entered anything, just print the help.

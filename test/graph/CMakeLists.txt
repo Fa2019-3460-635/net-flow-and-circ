@@ -6,6 +6,8 @@ set(headers
   graph_tests.hpp
   bfs_tests.hpp
   fordfulkerson_tests.hpp
+  circulationgraph_tests.hpp
+  circulation_tests.hpp
 )
 
 add_executable(graph-tests

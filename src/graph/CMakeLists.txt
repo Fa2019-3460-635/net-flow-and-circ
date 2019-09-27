@@ -6,6 +6,8 @@ set(
   bfs.cpp
   fordfulkerson.cpp
   flow_network.cpp
+  circulationgraph.cpp
+  circulation.cpp
 )
 
 set(
@@ -14,6 +16,8 @@ set(
   bfs.hpp
   fordfulkerson.hpp
   flow_network.hpp
+  circulationgraph.hpp
+  circulation.hpp
 )
 
 add_library(graph
