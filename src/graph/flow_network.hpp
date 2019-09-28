@@ -63,14 +63,14 @@ public:
      * 
      * This method assumes that the graph contains a single source
      */
-    int find_source();
+    virtual int find_source();
 
     /**
      * @brief The sink points to nothing
      * 
      * This method assumes that the graph contains a single sink
      */
-    int find_sink();
+    virtual int find_sink();
 
     /**
      * @brief Reduce the capacity of the edge between the given nodes
@@ -103,13 +103,13 @@ public:
      * @brief Find the sources for this graph
      * @return a list of source-node indicies.
      */
-    std::vector<int> get_sources ();
+    virtual std::vector<int> get_sources ();
 
     /**
      * @brief Find the sinks for this graph
      * @return a list of sink-node indicies.
      */
-    std::vector<int> get_sinks ();
+    virtual std::vector<int> get_sinks ();
 
 //==============================================================================
 // Implementation Details

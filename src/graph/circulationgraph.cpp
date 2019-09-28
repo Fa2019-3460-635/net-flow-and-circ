@@ -112,5 +112,25 @@ int graph::CirculationGraph::total_supply()
 
 int graph::CirculationGraph::total_demand()
 {
-   return m_total_demand;
+    return m_total_demand;
+}
+
+int graph::CirculationGraph::find_source()
+{
+    return 0; //0 is always the source for a circulation graph
+}
+
+int graph::CirculationGraph::find_sink()
+{
+    return 1; //1 is always the sink for a circulation graph
+}
+
+std::vector<int> graph::CirculationGraph::get_sources()
+{
+    return {0}; //0 is the only source node in a circulation graph
+}
+
+std::vector<int> graph::CirculationGraph::get_sinks()
+{
+    return {1}; //1 is the only sink node in a circulation graph
 }
