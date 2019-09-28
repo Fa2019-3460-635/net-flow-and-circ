@@ -56,6 +56,10 @@ bool graph::CirculationGraph::parse(std::istream &input_data)
               added++;
             }
         }
+        if(added % 2 == 0)
+        {
+            throw std::string("Incorrect graph file format for circulation");
+        }
 
         // Connect to source or sink node (for supply or demand)
         if(int_list[0] != 0)

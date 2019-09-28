@@ -32,6 +32,11 @@ bool Graph::parse (std::istream &input_data)
             }
         }
 
+        if(added % 2 != 0)
+        {
+            throw std::string("Incorrect file format for graph.");
+        }
+
         for (unsigned int i = 0; i < int_list.size(); i += 2) {
             edge new_edge;
             new_edge.node = int_list[i];

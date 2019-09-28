@@ -52,6 +52,7 @@ int main(int argc, char **argv)
     case ProgramOptions::AlgorithmSelection::FORD_FULKERSON:
       if(in_file.is_open()) {
         graph::FlowNetwork main_graph;
+
         if(main_graph.parse(in_file)) {
           // Ensure that the graph has a single source and sink
           main_graph = graph::FlowNetwork::transform_to_single_source_sink(main_graph);
