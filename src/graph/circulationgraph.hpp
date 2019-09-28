@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "graph.hpp"
 #include <vector>
@@ -59,6 +59,32 @@ namespace graph
          * @return
          */
         int total_demand();
+
+        /**
+         * @brief The source will have no edges pointing to it
+         *
+         * This method assumes that the graph contains a single source
+         */
+        int find_source() override;
+
+        /**
+         * @brief The sink points to nothing
+         *
+         * This method assumes that the graph contains a single sink
+         */
+        virtual int find_sink() override;
+
+        /**
+         * @brief Find the sources for this graph
+         * @return a list of source-node indicies.
+         */
+        virtual std::vector<int> get_sources () override;
+
+        /**
+         * @brief Find the sinks for this graph
+         * @return a list of sink-node indicies.
+         */
+        virtual std::vector<int> get_sinks () override;
 
     private:
         int m_total_supply;

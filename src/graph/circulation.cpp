@@ -10,9 +10,7 @@ graph::CirculationResult graph::Circulation::has_circulation(graph::CirculationG
         return graph::CirculationResult::SUPPLY_NEQ_DEMAND;
     }
 
-    graph::FlowNetwork flow_net = G.asFlowNetwork();
-
-    int min_cut = graph::FordFulkerson::max_flow(flow_net);
+    int min_cut = graph::FordFulkerson::max_flow(G);
 
     if(min_cut != G.total_supply())
     {
