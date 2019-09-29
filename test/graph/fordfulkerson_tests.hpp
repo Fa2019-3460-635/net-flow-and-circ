@@ -63,3 +63,18 @@ TEST(FordFulkerson, MaxFlow003)
 
     EXPECT_EQ(max_flow, 120);
 }
+
+TEST(FordFulkerson, MaxFlow004)
+{
+    std::vector<std::vector<graph::Graph::edge>> list = {
+        {{1, 100}, {2, 100}},//0
+        {{2, 1}, {3, 100}},//1
+        {{3, 100}},//2
+        {}//3
+    };
+
+    graph::FlowNetwork G (list);
+    int max_flow = graph::FordFulkerson::max_flow(G);
+
+    EXPECT_EQ(max_flow, 200);
+}
