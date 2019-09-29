@@ -69,3 +69,15 @@ cd bin
 ./*-tests
 ```
 
+---
+
+## Running Benchmarks and Generating Plots
+
+**NOTE**: Python and "pipenv" must be installed in order to successfully carry
+          out the following instructions.
+
+In a terminal within the project `build` directory, run:
+
+```bash
+make plots
+```

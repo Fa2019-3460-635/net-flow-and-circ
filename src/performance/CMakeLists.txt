@@ -1,6 +1,7 @@
 set(
 	sources
   random.cpp
+  random_flow_network.cpp
   random_graph.cpp
   timer.cpp
   tree.cpp
@@ -9,6 +10,7 @@ set(
 set(
 	headers
   random.hpp
+  random_flow_network.hpp
   random_graph.hpp
   timer.hpp
   tree.hpp

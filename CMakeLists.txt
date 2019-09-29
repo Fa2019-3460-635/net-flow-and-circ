@@ -37,3 +37,27 @@ if(DOXYGEN_FOUND)
 else(DOXYGEN_FOUND)
     message("")
 endif(DOXYGEN_FOUND)
+
+#############################################
+# commands for generating performance plots #
+#############################################
+
+set(PERFORMANCE_PLOTS
+  "plot.bfs.png"
+  "plot.ff.sparse.png"
+  "plot.ff.dense.png"
+)
+
+# command for building the plots (by taking measurements and then running
+# python scripts)
+add_custom_command(
+  OUTPUT
+    ${PERFORMANCE_PLOTS}
+  COMMAND ./bin/measurements
+  COMMAND cp ../report/plot.py ./
+  COMMAND pipenv install matplotlib
+  COMMAND pipenv run python plot.py
+)
+
+# target for building the plots
+add_custom_target(plots DEPENDS ${PERFORMANCE_PLOTS} measurements)
