@@ -18,7 +18,7 @@ public:
     {}
 
     /**
-     * @param adjacency_list: an adjacency list representation of a graph
+     * @param adj_list: an adjacency list representation of a graph
      */
     FlowNetwork (Graph::AdjacencyList const & adj_list)
     : Graph(adj_list)

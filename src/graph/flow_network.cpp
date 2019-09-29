@@ -184,7 +184,7 @@ FlowNetwork FlowNetwork::transform_to_single_source_sink(const FlowNetwork & G)
 
 std::vector<int> FlowNetwork::get_sources ()
 {
-    if(m_sources.size() >= 1) //m_sources have already been found, just flywheel that information.
+    if(!m_sources.empty()) //m_sources have already been found, just flywheel that information.
     {
         return m_sources;
     }
@@ -215,14 +215,14 @@ std::vector<int> FlowNetwork::get_sources ()
 
 std::vector<int> FlowNetwork::get_sinks ()
 {
-    if(m_sinks.size() >= 1) //m_sinks have already been found, just flywheel that information.
+    if(!m_sinks.empty()) //m_sinks have already been found, just flywheel that information.
     {
         return m_sinks;
     }
 
     for(int i = 0; i < get_adjacency_list().size(); i++)
     {
-        if(get_adjacency_list()[i].size() == 0)
+        if(get_adjacency_list()[i].empty())
         {
             m_sinks.push_back(i);
         }

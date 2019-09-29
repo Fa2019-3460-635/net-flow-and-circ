@@ -3,7 +3,8 @@
 #include <algorithm>
 
 graph::CirculationGraph::CirculationGraph()
-    : graph::FlowNetwork()
+      : m_total_supply(0),
+      m_total_demand(0)
 {}
 
 graph::CirculationGraph::CirculationGraph(const std::vector<std::vector<graph::Graph::edge>> &adjacency_list)
