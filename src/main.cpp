@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 
           std::cout << "Shortest path from node " << ProgramOptions::source_node() << ", to node " << ProgramOptions::target_node() << " is\n";
           for(int i = 0; i < shortest_path.size(); ++i) {
-            std::cout << shortest_path[i] << ", ";
+            std::cout << shortest_path[i] << ((i < shortest_path.size() - 1) ? ", " : "");
           }
           std::cout << std::endl;
         }
