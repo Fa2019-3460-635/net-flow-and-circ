@@ -14,5 +14,5 @@ add_executable(graph-tests
   ${sources}
   ${headers}
 )
-target_link_libraries(graph-tests PRIVATE graph gtest_main)
+target_link_libraries(graph-tests PRIVATE graph performance gtest_main)
 add_test(NAME graph-tests COMMAND graph-tests)
