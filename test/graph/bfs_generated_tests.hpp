@@ -64,6 +64,7 @@ TEST(BFS_Generated_Tests, GeneratedTests)
 
     int path_length = std::get<1>(test_case) + 1;
     EXPECT_EQ(path_length, path.size());
+    std::cout << "Success. Generated test case for BFS. " << i << " / " << NUM_RANDOM_BFS_TESTS << '\n';
   }
 
   std::cout << "Executed " << NUM_RANDOM_BFS_TESTS << " randomly generated BFS tests.\n";
