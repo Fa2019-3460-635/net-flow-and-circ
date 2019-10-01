@@ -7,10 +7,12 @@ Graphs are read in from a text file into an adjacency list data structure to be 
 - Ford-Fulkerson (implemented using BFS)
 - Circulation Identification
 
-## Authors: ## 
+#### Authors: ####
 - Sean Collins 
 - Andrew Robinson 
 - Edwin Sarver
+
+---
 
 **NOTE:** All instructions assume this project is being used on a Linux-based system.
 
