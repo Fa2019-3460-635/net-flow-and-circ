@@ -1,9 +1,16 @@
 # Advanced Algorithms, Project 1 - Network Flow and Circulation with Demands Problem #
 
-Demonstrate the solution to the Ford-Fulkerson algorithm using
-Breadth-First Search to determine the shortest path between the
-source and sink nodes. Using the same algorithm, solve the
-Circulation problem.
+An implemenation of the Edmonds-Karp algorithm, a dirivative of the Ford-Fulkerson algorithm that makes use of a path-finding algorithm to determine the next augmenting path. 
+
+Graphs are read in from a text file into an adjacency list data structure to be processed by one of three methods:
+- Breadth-first search (BFS)
+- Ford-Fulkerson (implemented using BFS)
+- Circulation Identification
+
+## Authors: ## 
+- Sean Collins 
+- Andrew Robinson 
+- Edwin Sarver
 
 **NOTE:** All instructions assume this project is being used on a Linux-based system.
 
