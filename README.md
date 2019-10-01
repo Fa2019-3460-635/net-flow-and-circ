@@ -63,16 +63,19 @@ There are a couple ways the run the unit tests for this project.
 In a terminal within the `build` folder in the project directory after a build has been completed:
 
 #### Option 1: `make test` ####
+
 ```bash
 make test
 ```
 
 #### Option 2: `ctest` ####
+
 ```bash
 ctest # use '-V' option for more information.
 ```
 
 #### Option 3: Run Test Binaries Individually ####
+
 ```bash
 cd bin
 ./*-tests
