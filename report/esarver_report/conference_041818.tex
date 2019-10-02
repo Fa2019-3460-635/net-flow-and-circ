@@ -33,17 +33,18 @@ and Edmonds-Karp, a derivative work of Ford-Fulkerson.
 The breadth-first search algorithm is used to find the path from the given
 start node to the given end node that includes the fewest edges. This is 
 accomplished by visiting all adjacent nodes to the source, then all the 
-adjacent nodes to those nodes and so on until the destination node is found.
+adjacent nodes to those nodes and so on until all nodes have been visited.
 
 When performing these steps, it is necessary to note which nodes have been 
 visited, the number of jumps to get to that node, and the order in which 
-the nodes were visited. Algorithm \ref{bfs} accomplishes that task. 
+the nodes were visited. A pseudocode version of BFS is shown in 
+Algorithm \ref{bfs} which shows how BFS works. 
 
 \begin{algorithm}
 \caption{Breadth-First Search \cite{b1}}\label{bfs}
    \begin{algorithmic}[1]
     \Function{BFS}{$G, s$}
-    \For{node in $G.V$}
+    \For{node in $G.V$} \label{bfs_init_loop}
         \State $node.color = $WHITE
         \State $node.dist = \infty$
         \State $node.prev =$ NIL
@@ -53,9 +54,9 @@ the nodes were visited. Algorithm \ref{bfs} accomplishes that task.
     \State $s.prev =$ NIL
     \State $Q = \emptyset$
     \State Enqueue($Q, s$)
-    \While{$Q \neq \emptyset$}
+    \While{$Q \neq \emptyset$} \label{bfs_while_loop}
     	\State $u =$ Dequeue($Q$)
-    	\For{each $v \in u.adjacent\_nodes$}
+    	\For{each $v \in u.adjacent\_nodes$} \label{bfs_nested_for}
     		\If{$v.color ==$ WHITE}
     			\State $v.color =$ GRAY
     			\State $v.dist = u.dist + 1$
@@ -70,8 +71,11 @@ the nodes were visited. Algorithm \ref{bfs} accomplishes that task.
 \end{algorithm} 
 
 \subsubsection{Theoretical Performance}
-The first loop of BFS in Algorithm \ref{bfs} will complete in $O(V)$
-time because it must run over every vertex in $V$. The second loop 
+The initialization loop (line \ref{bfs_init_loop}) of BFS in Algorithm \ref{bfs} 
+will complete in $O(V)$ time because it must run over every vertex in $V$. 
+The while loop (line \ref{bfs_while_loop}) will run over each edge in the 
+graph and will thus complete in $O(E)$. Therefore the total running time is
+$O(V+E)$.
 
 
 \subsection{Ford-Fulkerson/Edmonds-Karp}
@@ -97,10 +101,13 @@ The method works as shown in Algorithm \ref{ff}.
 The first part in Algorithm \ref{ff} is to find an augmenting path. An augmenting 
 path is a simple path, one that only visits the consituent nodes and edges once, 
 from the source node to the sink node. The flow along an augmenting path can only be 
-increased by the minimum capacity along that path. 
+increased by the minimum capacity along that path, along what is known as the critical
+edge. 
 
 After finding the first augmenting path and increasing the flow along that path, a 
-residual network is created. A residual network is created by the residual capacity defined by Equation \ref{residual_capacity}.
+residual network is created. The residual graph is created by removing the critical
+all critical edges, and adding in edges with residual capacities defined by Equation 
+\ref{residual_capacity}.
 
 \begin{equation}
 \label{residual_capacity}
@@ -111,20 +118,59 @@ c_f = \begin{cases}
 	\end{cases}
 \end{equation}
 
+\subsubsection{Theoretical Performance} % TODO revisit this.
+When the flow on an edge in an augmenting path is equal to the capacity of 
+that edge, that edge is said to be "critical". A critical edge, after augmenting
+occurs, is removed from the residual graph. A given critical edge cannot become
+critical again until the shortest path from the source to the sink is 2 greater 
+than when that critical edge was found. Any edge in a graph can be critical
+at most $V/2$ times and there are $E$ edges. Therefore the time complexity of 
+the Edmonds-Karp algorithm is $O(EV)$. The loop in the Ford-Fulkerson can be run
+up to $O(E)$ times, and therefore the total time complexity is $O(VE^2)$.
+
 \subsection{Circulation}
-% TODO
+The Circulation of supply and demand problem is a logistical problem in 
+which a flow network has various nodes that have a given demand value. 
+If that demand value is negative, that node has a supply. If the demand
+value is positive, that node has a demand.
+
+The problem can be reformulated to be a maximum flow problem. Each negative 
+demand value can be thought of as an edge from a source to the node with the
+demand value. That edge will have a capacity equal to the absolute value of 
+the demand value. Similarly, each positive demand value can be thought of as
+an edge from the node with the demand value to a sink node with a capacity 
+equal to the demand value. 
+
+If the total of all the supply values is not equal to the demand value, there 
+is no circulation in the system. However, if the supply and demand values are 
+equivalent, then the maximum flow of the system must be determined. The Edmonds-Karp
+algorithm can be used to get the maximum flow. 
+
+If the maximum flow is not equal to the sum of the supply or demand values, there is no
+circulation in the system. Only if the maximum flow is equal to the sum of the supply value 
+and the sum of the demand values is circulation present in the system. 
 
 \section{Data Structures}
-% TODO
+Graphs are represented by structures that show how the graphs are connected. There are 
+multiple ways to represent these connections. One way is to use an adjacency matrix.
+
+In an adjacency matrix, the connection between each node to every other node is represented.
+In such a structure, there has to be $|V|^2$ slots to hold the connection information. This
+method of representation is very convenient for the programmer because determining if a 
+connection exists is easy. However, it is only considered space efficient if the graph in
+question is very dense. 
+
+The other option is to use an adjacency list. Each node in an adjacency list contains a list 
+that holds onle the connection information for the nodes to which is is connected. This makes 
+adjacency lists well suited for sparse graphs. 
+
+Since flow networks are sparse graphs, adjacency lists are the obvious choice to represent them.
 
 \section{Implementation Difficulties}
 % TODO
 
-\section{Performance Analysis}
-% TODO
-\subsection{Theoretical}
-% TODO
-\subsection{Experimental}
+
+\section{Experimental Performance Analysis}
 % TODO
 
 \section{Insights}
