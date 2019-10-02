@@ -1,0 +1,140 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Network Flow and Circulation with Demands}
+
+
+\author{\IEEEauthorblockN{Edwin Sarver}}
+
+\maketitle
+
+\section{Introduction}
+% TODO 
+
+\section{Algorithms}
+Two main algorithms were used in this project: Breadth-First Search (BFS),
+and Edmonds-Karp, a dirivative work of Ford-Fulkerson.
+
+\subsection{Breadth-First Search}
+The breadth-first search algorithm is used to find the path from the given
+start node to the given end node that includes the fewest edges. This is 
+accomplished by visiting all adjacent nodes to the source, then all the 
+adjacent nodes to those nodes and so on until the destination node is found.
+
+When performing these steps, it is necessary to note which nodes have been 
+visited, the number of jumps to get to that node, and the order in which 
+the nodes were visited. Algorithm \ref{bfs} accomplishes that task. 
+
+\begin{algorithm}
+\caption{Breadth-First Search \cite{b1}}\label{bfs}
+   \begin{algorithmic}
+    \Function{BFS}{$G, s$}
+    \For{node in $G.V$}
+        \State $node.color = $WHITE
+        \State $node.dist = \infty$
+        \State $node.prev =$ NIL
+    \EndFor
+    \State $s.color =$ GRAY
+    \State $s.dist =$ 0
+    \State $s.prev =$ NIL
+    \State $Q = \emptyset$
+    \State Enqueue($Q, s$)
+    \While{$Q \neq \emptyset$}
+    	\State $u =$ Dequeue($Q$)
+    	\For{each $v \in u.adjacent\_nodes$}
+    		\If{$v.color ==$ WHITE}
+    			\State $v.color =$ GRAY
+    			\State $v.dist = u.dist + 1$
+    			\State $v.prev = u$
+    			\State Enqueue($Q, v$)
+    		\EndIf
+    	\EndFor
+		\State $u.color =$ BLACK
+    \EndWhile
+    \EndFunction
+   \end{algorithmic}
+\end{algorithm} 
+
+\subsection{Ford-Fulkerson/Edmonds-Karp}
+The Ford-Fulkerson method is a set of algorithms used to determine the maximum 
+possible flow through a network. There is a derivative method called Edmonds-Karp 
+that prescribes that a path-finding algorithm be used to find an augmenting path. The method works as shown in Algorithm \ref{ff}.
+ 
+
+\begin{algorithm}
+\caption{Ford-Fulkerson Method \cite{b1}}\label{ff}
+	\begin{algorithmic}
+		\Function{FordFulkerson}{$G, s, t$}
+			\State $f = 0$
+			\While{$\exists p \in G_f$}
+				\State $f = G_f.augment(p)$
+			\EndWhile
+			\State \Return $f$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+The first part in Algorithm \ref{ff} is to find an augmenting path. An augmenting 
+path is a simple path, one that only visits the consituent nodes and edges once, 
+from the source node to the sink node. The flow along an augmenting path can only be 
+increased by the minimum capacity along that path. 
+
+After finding the first augmenting path and increasing the flow along that path, a 
+residual network is created. A residual network is created by the residual capacity defined by Equation \ref{residual_capacity}.
+
+\begin{equation}
+\label{residual_capacity}
+c_f = \begin{cases}
+		c(u,v) - f(u,v) & if (u,v) \in E,\\
+		f(v,u) & if (v,u) \in E,\\
+		0 & otherwise.
+	\end{cases}
+\end{equation}
+
+\subsection{Circulation}
+% TODO
+
+\section{Data Structures}
+% TODO
+
+\section{Implementation Difficulties}
+% TODO
+
+\section{Performance Analysis}
+% TODO
+\subsection{Theoretical}
+% TODO
+\subsection{Experimental}
+% TODO
+
+\section{Insights}
+% TODO
+
+\section{Test Cases}
+% TODO
+\subsection{Design}
+% TODO
+\subsection{Results}
+% TODO
+
+\section{Conclusion}
+
+\begin{thebibliography}{00}
+    \bibitem{b1} T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein, Introduction to Algorithms, 3rd ed., MIT, 2009, pp. 594--602, 709--731 
+\end{thebibliography}
+
+\end{document}
