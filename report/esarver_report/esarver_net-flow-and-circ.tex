@@ -8,6 +8,7 @@
 \usepackage{algpseudocode}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning}
+\usepackage{listings}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
@@ -25,7 +26,7 @@
 \section{Introduction}
 % TODO 
 
-\section{Algorithms}
+\section{Algorithms}\label{algo}
 Two main algorithms were used in this project: Breadth-First Search (BFS),
 and Edmonds-Karp, a derivative work of Ford-Fulkerson.
 
@@ -166,8 +167,16 @@ adjacency lists well suited for sparse graphs.
 
 Since flow networks are sparse graphs, adjacency lists are the obvious choice to represent them.
 
-\section{Implementation Difficulties}
-% TODO
+\section{Implementation Difficulties} % TODO revisit this
+There were very few obstacles while implementing the algorithms described in section 
+\ref{algo}. One issue that was narrowly avoided, however, was ensuring that the circulaltion
+graph implementation was able to correctly inherit from the other graph objects. There
+were several methods that had to be \lstinline{virtual}. 
+
+This would have cause an issue in the Ford-Fulkerson implementation if a circulation graph
+was passed to it, such as when the circulation algorithm was run. This could have been 
+worked around my converting the circulation graph to a flow network, but would have relied
+too heavily on convention to ensure errors were not made.
 
 
 \section{Experimental Performance Analysis}
@@ -186,7 +195,7 @@ Since flow networks are sparse graphs, adjacency lists are the obvious choice to
 \section{Conclusion}
 
 \begin{thebibliography}{00}
-    \bibitem{b1} T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein, Introduction to Algorithms, 3rd ed., MIT, 2009, pp. 594--602, 709--731 
+    \bibitem{b1} T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein, Introduction to Algorithms, 3rd ed., The MIT Press, 2009, pp. 594--602, 709--731 
 \end{thebibliography}
 
 \end{document}
