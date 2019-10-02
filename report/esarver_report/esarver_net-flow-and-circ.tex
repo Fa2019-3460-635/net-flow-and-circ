@@ -23,8 +23,10 @@
 
 \maketitle
 
+%TODO: https://tex.stackexchange.com/questions/13675/use-graphviz-within-tex
+
 \section{Introduction}
-% TODO 
+%TODO
 
 \section{Algorithms}\label{algo}
 Two main algorithms were used in this project: Breadth-First Search (BFS),
@@ -186,7 +188,7 @@ too heavily on convention to ensure errors were not made.
 % TODO
 
 \section{Test Cases} % TODO revisit this
-In this project, many forms of testing were utilized: Unit tests, Correctness tests,
+In this project, many forms of testing were utilized: Unit tests, correctness tests,
 and performance tests.
 
 \subsection{Unit Tests}
@@ -214,8 +216,12 @@ edges in the two subgraphs. This ensures that the maximum flow through the full 
 will be limited to the capacity of the bottleneck edge. The maximum flow is, therefore, 
 known after generation.
 
-\subsection{Performance Tests}
-
+\subsection{Performance Tests} %TODO revisit this
+The performance tests make use of the random graph generation utilities created for the 
+correctness tests. For the desired number of samples, a graph is created then a timer is
+started, the algorithm in question is then run, then the timer is stopped. The information
+concerning the number of verticies, edges and the time taken to run is then output to a 
+file. This file can then be plotted using a python script. 
 
 %\subsection{Design}
 % TODO
