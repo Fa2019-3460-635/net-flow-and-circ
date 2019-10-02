@@ -27,7 +27,7 @@
 
 \section{Algorithms}
 Two main algorithms were used in this project: Breadth-First Search (BFS),
-and Edmonds-Karp, a dirivative work of Ford-Fulkerson.
+and Edmonds-Karp, a derivative work of Ford-Fulkerson.
 
 \subsection{Breadth-First Search}
 The breadth-first search algorithm is used to find the path from the given
@@ -41,7 +41,7 @@ the nodes were visited. Algorithm \ref{bfs} accomplishes that task.
 
 \begin{algorithm}
 \caption{Breadth-First Search \cite{b1}}\label{bfs}
-   \begin{algorithmic}
+   \begin{algorithmic}[1]
     \Function{BFS}{$G, s$}
     \For{node in $G.V$}
         \State $node.color = $WHITE
@@ -69,15 +69,21 @@ the nodes were visited. Algorithm \ref{bfs} accomplishes that task.
    \end{algorithmic}
 \end{algorithm} 
 
+\subsubsection{Theoretical Performance}
+The first loop of BFS in Algorithm \ref{bfs} will complete in $O(V)$
+time because it must run over every vertex in $V$. The second loop 
+
+
 \subsection{Ford-Fulkerson/Edmonds-Karp}
 The Ford-Fulkerson method is a set of algorithms used to determine the maximum 
 possible flow through a network. There is a derivative method called Edmonds-Karp 
-that prescribes that a path-finding algorithm be used to find an augmenting path. The method works as shown in Algorithm \ref{ff}.
+that prescribes that a path-finding algorithm be used to find an augmenting path. 
+The method works as shown in Algorithm \ref{ff}.
  
 
 \begin{algorithm}
 \caption{Ford-Fulkerson Method \cite{b1}}\label{ff}
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		\Function{FordFulkerson}{$G, s, t$}
 			\State $f = 0$
 			\While{$\exists p \in G_f$}
