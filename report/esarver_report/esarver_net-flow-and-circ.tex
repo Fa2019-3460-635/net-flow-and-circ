@@ -12,6 +12,8 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+
+\graphicspath{{../images/}}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -183,6 +185,59 @@ too heavily on convention to ensure errors were not made.
 
 \section{Experimental Performance Analysis}
 % TODO
+\subsection{BFS}
+The BFS algorithm was a relatively inexpensive algorithm to run and could, therefore,
+be run on a large number of samples. Fig. \ref{bfs_perf} shows the running time of the 
+the BFS algorithm versus $V + E$. Since the running time is plotted against the expected
+upper bound, it is expected that the asymptotic bound in the graph would be shown as a 
+straight line or concave down. Besides a single outlier, likely due to the operating 
+system scheduling other tasks, there is a defined, straight line bounding the points of 
+this graph. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=3.25in]{BFS_DenseGraph.png}
+	\caption{BFS Performance: Run Time vs $V + E$}
+	\label{bfs_perf}
+\end{figure}
+
+\subsection{Edmonds-Karp}
+
+The Edmonds-Karp algorithm may have different running characteristics depending on the 
+density of the graphs it is to process. Both densities were tried and are shown in Fig. 
+\ref{ff_perf_sparse} and \ref{ff_perf_dense}. 
+
+In the sparse graph results (Fig. \ref{ff_perf_sparse}), the running time was, once again,
+plotted against the expected time complexity of $O(VE^2)$. In this graph there are distinct,
+convex-down asymptotes. This is likely an artifact from the way that the random graphs are 
+generated (see section \ref{perf_explanation} for more information). Regardless, the overall convex-down asymptote shows that the points in the plot 
+are bounded by $O(VE^2)$.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=3.25in]{Edmonds-Karp_Sparse.png}
+	\caption{Edmonds-Karp Performance on Sparse Graph: Run Time vs $VE^2$}
+	\label{ff_perf_sparse}
+\end{figure}
+
+The performance tests of the dense graphs took much longer to run, since there are significantly
+more edges in these graphs than the sparse graphs. Because of this, much fewer samples could be 
+run in a resonable amount of time. 
+
+As with the sparse graphs, there is a convex-down asymptote when running time is plotted against
+$VE^2$. This validates that the overall time complexity of the Edmonds-Karp algorithm is bounded 
+by $O(VE^2)$.
+\begin{figure}
+	\centering
+	\includegraphics[width=3.25in]{Edmonds-Karp_Dense.png}
+	\caption{Edmonds-Karp Performance on Dense Graph: Run Time vs $VE^2$}
+	\label{ff_perf_dense}
+\end{figure}
+
+The variability of the time required for each step of the Edmonds-Karp algorithm is likely the 
+cause of the plots above showing a convex-down asymptote. It is difficult to randomly generate
+a worst-case graph. Most graphs will likely run in less than $VE^2$ time, as is shown in the 
+results.
 
 \section{Insights}
 % TODO
@@ -216,12 +271,12 @@ edges in the two subgraphs. This ensures that the maximum flow through the full 
 will be limited to the capacity of the bottleneck edge. The maximum flow is, therefore, 
 known after generation.
 
-\subsection{Performance Tests} %TODO revisit this
+\subsection{Performance Tests}\label{perf_explanation} %TODO revisit this
 The performance tests make use of the random graph generation utilities created for the 
 correctness tests. For the desired number of samples, a graph is created then a timer is
 started, the algorithm in question is then run, then the timer is stopped. The information
-concerning the number of verticies, edges and the time taken to run is then output to a 
-file. This file can then be plotted using a python script. 
+concerning the number of verticies and edges, and the running time is then output to a 
+JSON file. This file can then be plotted using a python script. 
 
 %\subsection{Design}
 % TODO
