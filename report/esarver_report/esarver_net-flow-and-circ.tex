@@ -28,7 +28,9 @@
 %TODO: https://tex.stackexchange.com/questions/13675/use-graphviz-within-tex
 
 \section{Introduction}
-%TODO
+The Ford-Fulkerson method and the Edmonds-Karp algorithm that built upon it
+by using Breadth-First Search, are valuable algorithms in many fields that 
+must know how to maximize the flow through a network.
 
 \section{Algorithms}\label{algo}
 Two main algorithms were used in this project: Breadth-First Search (BFS),
@@ -43,7 +45,7 @@ adjacent nodes to those nodes and so on until all nodes have been visited.
 When performing these steps, it is necessary to note which nodes have been 
 visited, the number of jumps to get to that node, and the order in which 
 the nodes were visited. A pseudocode version of BFS is shown in 
-Algorithm \ref{bfs} which shows how BFS works. 
+Algorithm \ref{bfs}. 
 
 \begin{algorithm}
 \caption{Breadth-First Search \cite{b1}}\label{bfs}
@@ -104,7 +106,7 @@ The method works as shown in Algorithm \ref{ff}.
 \end{algorithm}
 
 The first part in Algorithm \ref{ff} is to find an augmenting path. An augmenting 
-path is a simple path, one that only visits the consituent nodes and edges once, 
+path is a simple path, one that only visits the constituent nodes and edges once, 
 from the source node to the sink node. The flow along an augmenting path can only be 
 increased by the minimum capacity along that path, along what is known as the critical
 edge. 
@@ -166,14 +168,14 @@ connection exists is easy. However, it is only considered space efficient if the
 question is very dense. 
 
 The other option is to use an adjacency list. Each node in an adjacency list contains a list 
-that holds onle the connection information for the nodes to which is is connected. This makes 
+that holds only the connection information for the nodes to which is is connected. This makes 
 adjacency lists well suited for sparse graphs. 
 
 Since flow networks are sparse graphs, adjacency lists are the obvious choice to represent them.
 
 \section{Implementation Difficulties} % TODO revisit this
 There were very few obstacles while implementing the algorithms described in section 
-\ref{algo}. One issue that was narrowly avoided, however, was ensuring that the circulaltion
+\ref{algo}. One issue that was narrowly avoided, however, was ensuring that the circulation
 graph implementation was able to correctly inherit from the other graph objects. There
 were several methods that had to be \lstinline{virtual}. 
 
@@ -184,7 +186,11 @@ too heavily on convention to ensure errors were not made.
 
 
 \section{Experimental Performance Analysis}
-% TODO
+The theoretical time complexity of Breadth-First Search is $O(V + E)$ and the theoretical
+time complexity of the Edmonds-Karp algorithm is $O(VE^2)$. To show that this is the case,
+many samples of actual running time must be completed. This will control for the variability
+caused by doing the tests on a general-purpose computer. 
+
 \subsection{BFS}
 The BFS algorithm was a relatively inexpensive algorithm to run and could, therefore,
 be run on a large number of samples. Fig. \ref{bfs_perf} shows the running time of the 
@@ -222,7 +228,7 @@ are bounded by $O(VE^2)$.
 
 The performance tests of the dense graphs took much longer to run, since there are significantly
 more edges in these graphs than the sparse graphs. Because of this, much fewer samples could be 
-run in a resonable amount of time. 
+run in a reasonable amount of time. 
 
 As with the sparse graphs, there is a convex-down asymptote when running time is plotted against
 $VE^2$. This validates that the overall time complexity of the Edmonds-Karp algorithm is bounded 
@@ -240,9 +246,17 @@ a worst-case graph. Most graphs will likely run in less than $VE^2$ time, as is 
 results.
 
 \section{Insights}
-% TODO
+The Ford-Fulkerson algorithm is a very flexible algorithm. The method by which augmenting paths 
+are determined can be replaced for other algorithms, such as in the case of using BFS in Edmonds-Karp.
+This allows for improvements to be made to the efficiency of the algorithm without changing the 
+basis of how the algorithm works. This is a powerful way to design an algorithm. It allows for 
+incremental improvements as more people are able to investigate and experiment with the problem.
 
-\section{Test Cases} % TODO revisit this
+Even with this modularity, Ford-Fulkerson and the Edmonds-Karp derivative are still greedy algorithms
+that require a long time to run.
+
+
+\section{Test Cases}
 In this project, many forms of testing were utilized: Unit tests, correctness tests,
 and performance tests.
 
@@ -257,17 +271,17 @@ The more interesting and valuable test-cases were the randomly generated problem
 of these test-cases were to create graphs of a known size, density, and result without needing
 to write them by hand. Because this method of testing could generate more varied graphs, there 
 was greater confidence that the algorithms were implemented were correct. The generated graphs 
-targetted one of the two major algorithms: BFS or Ford-Fulkerson. Circulation was not targetted
+targeted one of the two major algorithms: BFS or Ford-Fulkerson. Circulation was not targeted
 because it was more of an application of the Ford-Fulkerson method.
 
 The graphs targeted at BFS were generated by creating a known path. After this known path was
 known, more edges and nodes were added to the graph. When creating the extra nodes and edges, 
-the only rule was that the edges could not connect to the nodes on the shortes path. This 
+the only rule was that the edges could not connect to the nodes on the shortest path. This 
 ensured that the shortest path from start to finish was always the known shortest path. 
 
 The graphs targeted at Ford-Fulkerson were generated by using a "bottleneck" edge between 
-two subgraphs. This bottleneck edge has a capacity the is significantly smaller than the 
-edges in the two subgraphs. This ensures that the maximum flow through the full graph
+two sub-graphs. This bottleneck edge has a capacity the is significantly smaller than the 
+edges in the two sub-graphs. This ensures that the maximum flow through the full graph
 will be limited to the capacity of the bottleneck edge. The maximum flow is, therefore, 
 known after generation.
 
@@ -275,7 +289,7 @@ known after generation.
 The performance tests make use of the random graph generation utilities created for the 
 correctness tests. For the desired number of samples, a graph is created then a timer is
 started, the algorithm in question is then run, then the timer is stopped. The information
-concerning the number of verticies and edges, and the running time is then output to a 
+concerning the number of vertices and edges, and the running time is then output to a 
 JSON file. This file can then be plotted using a python script. 
 
 %\subsection{Design}
@@ -284,6 +298,9 @@ JSON file. This file can then be plotted using a python script.
 % TODO
 
 \section{Conclusion}
+The Edmonds-Karp algorithm is a useful algorithm for many applications. The thought process
+behind the Edmonds-Karp algorithm is a valuable starting point in understanding other 
+flow network algorithms. 
 
 \begin{thebibliography}{00}
     \bibitem{b1} T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein, Introduction to Algorithms, 3rd ed., The MIT Press, 2009, pp. 594--602, 709--731 
